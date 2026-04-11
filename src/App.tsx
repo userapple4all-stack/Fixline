@@ -62,10 +62,44 @@ const servicesData = [
   }
 ];
 
+const hardwareLogos = [
+  { name: 'Dell', url: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg', className: 'h-6 md:h-7 w-auto' },
+  { name: 'HP', url: 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg', className: 'h-8 md:h-9 w-auto' },
+  { name: 'Lenovo', url: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg', className: 'h-4 md:h-5 w-auto' },
+  { name: 'Apple', url: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', className: 'h-7 md:h-8 w-auto mb-1' },
+  { name: 'Microsoft', url: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg', className: 'h-6 md:h-7 w-auto' },
+  { name: 'Asus', url: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg', className: 'h-4 md:h-5 w-auto' },
+];
+
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(servicesData[0].id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [typedWelcomeText, setTypedWelcomeText] = useState('');
+  const fullWelcomeText = "Welcome to Fixline";
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    let currentIndex = 0;
+
+    const typeNextChar = () => {
+      if (currentIndex < fullWelcomeText.length) {
+        setTypedWelcomeText(fullWelcomeText.slice(0, currentIndex + 1));
+        currentIndex++;
+        
+        // Calculate delay: starts fast (30ms), ends slow (up to ~200ms)
+        const progress = currentIndex / fullWelcomeText.length;
+        const delay = 30 + (Math.pow(progress, 3) * 170); 
+        
+        timeout = setTimeout(typeNextChar, delay);
+      }
+    };
+
+    // Start typing after a short initial delay to sync with fade-in
+    timeout = setTimeout(typeNextChar, 600);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -190,7 +224,7 @@ export default function App() {
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/10 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             {/* Left Content */}
             <div className="max-w-2xl">
@@ -199,8 +233,9 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm">
-                  Welcome to Fixline
+                <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm min-w-[160px] text-center">
+                  {typedWelcomeText}
+                  <span className="animate-pulse ml-0.5">|</span>
                 </span>
               </motion.div>
               
@@ -276,17 +311,69 @@ export default function App() {
         </div>
       </section>
 
+      {/* Trust Bridge (Logos) */}
+      <section className="py-12 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <p className="text-center text-brand-blue/60 font-medium text-sm md:text-base tracking-wide mb-10">
+            The support standard for world-class hardware.
+          </p>
+          
+          <div 
+            className="relative w-full overflow-hidden"
+            style={{ 
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+              maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+            }}
+          >
+            <div className="flex w-max animate-marquee gap-16 md:gap-24 items-center">
+              {/* First set of logos */}
+              {hardwareLogos.map((logo, i) => (
+                <div key={i} className="flex items-center justify-center shrink-0">
+                  <img 
+                    src={logo.url} 
+                    alt={`${logo.name} logo`} 
+                    className={`${logo.className} grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300`}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              ))}
+              {/* Second set of logos for seamless loop */}
+              {hardwareLogos.map((logo, i) => (
+                <div key={`dup-${i}`} className="flex items-center justify-center shrink-0">
+                  <img 
+                    src={logo.url} 
+                    alt={`${logo.name} logo`} 
+                    className={`${logo.className} grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300`}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Overview */}
-      <section id="services" className="py-24 lg:py-32 bg-white relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <motion.section 
+        id="services" 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-10 lg:py-12 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200"
+      >
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="mb-16 max-w-3xl"
           >
-            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4">What we do</h2>
+            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
+              <span className="w-8 h-px bg-brand-blue"></span>
+              What we do
+            </h2>
             <h3 className="font-heading text-4xl md:text-5xl font-bold text-brand-navy mb-6 tracking-tight">
               The full spectrum of technical support.
             </h3>
@@ -301,7 +388,7 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex overflow-x-auto sm:flex-wrap justify-start sm:justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 pb-4 sm:pb-0 snap-x hide-scrollbar"
+            className="flex overflow-x-auto sm:flex-wrap justify-start gap-2 sm:gap-4 mb-8 sm:mb-12 pb-4 sm:pb-0 snap-x hide-scrollbar"
           >
             {servicesData.map((service) => {
               const isActive = activeTab === service.id;
@@ -365,11 +452,17 @@ export default function App() {
             })}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How It Works */}
-      <section className="py-24 lg:py-32 bg-slate-50 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <motion.section 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-10 lg:py-12 bg-slate-50 relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200/60"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           
           {/* Top Header */}
           <motion.div 
@@ -566,23 +659,29 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Why Fixline */}
-      <section id="why-us" className="py-24 lg:py-32 bg-[#0B0F19] text-white relative overflow-hidden">
-        {/* Electric Blue Glow & Image Overlay */}
-        <div className="absolute inset-0 z-0 bg-[#0044FF]/5">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[800px] md:h-[800px] bg-[#0044FF]/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"></div>
+      <motion.section 
+        id="why-us" 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-12 lg:py-16 bg-brand-blue text-white relative overflow-hidden m-4 lg:m-6 rounded-xl"
+      >
+        {/* Subtle Background Overlay */}
+        <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000" 
             alt="Abstract tech background" 
-            className="w-full h-full object-cover opacity-20 mix-blend-overlay"
+            className="w-full h-full object-cover opacity-[0.08] mix-blend-overlay"
             referrerPolicy="no-referrer"
           />
         </div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-12 items-center">
             
             {/* Left Column: Text & CTA */}
             <motion.div 
@@ -596,27 +695,27 @@ export default function App() {
                 Why Fixline:<br />
                 A different standard.
               </h2>
-              <p className="text-lg text-blue-100/80 mb-8 leading-relaxed">
-                We don't just fix what's broken—we build resilient systems. Experience enterprise-grade technical solutions with complete transparency, verified parts, and professional reporting.
+              <p className="text-lg text-blue-100 mb-8 leading-relaxed">
+                Your business deserves more than a temporary patch. We deliver technical stability and honest insights, ensuring your systems are resilient enough to support your growth without the usual shortcuts.
               </p>
-              <button className="bg-[#0044FF] hover:bg-blue-500 text-white px-8 py-3.5 rounded-full text-sm font-semibold transition-all shadow-[0_0_20px_rgba(0,68,255,0.4)] hover:shadow-[0_0_30px_rgba(0,68,255,0.6)]">
+              <button className="bg-white text-brand-blue hover:bg-slate-50 px-8 py-3.5 rounded-full text-sm font-semibold transition-all shadow-sm">
                 Learn More About Us
               </button>
             </motion.div>
 
             {/* Right Column: 2x2 Grid */}
-            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 lg:gap-5">
+            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 lg:gap-6">
               {/* Card 1 */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-[#131B2F]/90 backdrop-blur-md border border-[#0044FF]/20 rounded-2xl p-8 hover:bg-[#1A243D] hover:border-[#0044FF]/40 transition-all shadow-lg"
+                className="bg-white/10 border border-white/20 rounded-xl p-6 lg:p-8 hover:bg-white/15 transition-all"
               >
-                <Desktop size={32} className="text-[#0044FF] mb-5 drop-shadow-[0_0_8px_rgba(0,68,255,0.8)]" weight="fill" />
+                <Desktop size={28} className="text-white mb-4" weight="duotone" />
                 <h4 className="font-heading text-lg font-bold text-white mb-2">Real-time transparency</h4>
-                <p className="text-blue-100/70 text-sm leading-relaxed">
+                <p className="text-blue-100 text-sm leading-relaxed">
                   Every job is tracked. You receive updates and progress reports throughout the repair process.
                 </p>
               </motion.div>
@@ -627,11 +726,11 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-[#131B2F]/90 backdrop-blur-md border border-[#0044FF]/20 rounded-2xl p-8 hover:bg-[#1A243D] hover:border-[#0044FF]/40 transition-all shadow-lg sm:translate-y-6"
+                className="bg-white/10 border border-white/20 rounded-xl p-6 lg:p-8 hover:bg-white/15 transition-all"
               >
-                <ShieldCheck size={32} className="text-[#0044FF] mb-5 drop-shadow-[0_0_8px_rgba(0,68,255,0.8)]" weight="fill" />
+                <ShieldCheck size={28} className="text-white mb-4" weight="duotone" />
                 <h4 className="font-heading text-lg font-bold text-white mb-2">Verified components</h4>
-                <p className="text-blue-100/70 text-sm leading-relaxed">
+                <p className="text-blue-100 text-sm leading-relaxed">
                   We use genuine, high-quality hardware sourced from trusted suppliers. No shortcuts.
                 </p>
               </motion.div>
@@ -642,11 +741,11 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="bg-[#131B2F]/90 backdrop-blur-md border border-[#0044FF]/20 rounded-2xl p-8 hover:bg-[#1A243D] hover:border-[#0044FF]/40 transition-all shadow-lg"
+                className="bg-white/10 border border-white/20 rounded-xl p-6 lg:p-8 hover:bg-white/15 transition-all"
               >
-                <FileText size={32} className="text-[#0044FF] mb-5 drop-shadow-[0_0_8px_rgba(0,68,255,0.8)]" weight="fill" />
+                <FileText size={28} className="text-white mb-4" weight="duotone" />
                 <h4 className="font-heading text-lg font-bold text-white mb-2">Professional reporting</h4>
-                <p className="text-blue-100/70 text-sm leading-relaxed">
+                <p className="text-blue-100 text-sm leading-relaxed">
                   Receive clear diagnostic reports and proper invoices for every service performed.
                 </p>
               </motion.div>
@@ -657,11 +756,11 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-[#131B2F]/90 backdrop-blur-md border border-[#0044FF]/20 rounded-2xl p-8 hover:bg-[#1A243D] hover:border-[#0044FF]/40 transition-all shadow-lg sm:translate-y-6"
+                className="bg-white/10 border border-white/20 rounded-xl p-6 lg:p-8 hover:bg-white/15 transition-all"
               >
-                <ShieldCheck size={32} className="text-[#0044FF] mb-5 drop-shadow-[0_0_8px_rgba(0,68,255,0.8)]" weight="fill" />
+                <ShieldCheck size={28} className="text-white mb-4" weight="duotone" />
                 <h4 className="font-heading text-lg font-bold text-white mb-2">Strict Data Security</h4>
-                <p className="text-blue-100/70 text-sm leading-relaxed">
+                <p className="text-blue-100 text-sm leading-relaxed">
                   Your data remains private. We follow strict protocols to ensure your information is never compromised.
                 </p>
               </motion.div>
@@ -669,14 +768,21 @@ export default function App() {
 
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Beyond Repair (Products) */}
-      <section id="products" className="py-24 bg-white relative overflow-hidden">
+      <motion.section 
+        id="products" 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-10 lg:py-12 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200"
+      >
         {/* Subtle background decoration */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-blue/5 blur-[100px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -703,16 +809,16 @@ export default function App() {
             </div>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="flex overflow-x-auto gap-6 pb-12 pt-4 px-6 lg:px-12 hide-scrollbar snap-x snap-mandatory -mx-6 lg:-mx-12">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="group bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
+              className="group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
-              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-navy mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <WifiHigh size={28} weight="duotone" />
               </div>
               <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Networks</h4>
@@ -724,10 +830,10 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="group bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
+              className="group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
-              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-navy mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <Cpu size={28} weight="duotone" />
               </div>
               <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Builds</h4>
@@ -739,10 +845,10 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="group bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
+              className="group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
-              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-navy mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <TerminalWindow size={28} weight="duotone" />
               </div>
               <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline OS</h4>
@@ -754,41 +860,53 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="group bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
+              className="group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
-              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-navy mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
-                <Certificate size={28} weight="duotone" />
+              <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
+                <Wrench size={28} weight="duotone" />
               </div>
-              <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Certified</h4>
-              <p className="text-slate-500 relative z-10 leading-relaxed font-light">A catalog of verified, high-grade hardware components used in our repairs and custom builds.</p>
+              <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Tools</h4>
+              <p className="text-slate-500 relative z-10 leading-relaxed font-light">A catalog of verified, high-grade hardware components and tools used in our repairs and custom builds.</p>
             </motion.div>
+            
+            {/* Spacer for the end */}
+            <div className="shrink-0 w-[4vw]"></div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-brand-blue relative overflow-hidden">
+      <motion.section 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-16 lg:py-24 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl"
+      >
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000')] opacity-10 mix-blend-overlay bg-cover bg-center"></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Need help with your device?
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-12 relative z-10 text-center">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+            Ready to restore your system?
           </h2>
-          <p className="text-xl text-blue-100 mb-2 max-w-2xl mx-auto">
-            Start with a free 15-minute diagnosis with a Fixline engineer.
+          <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Join hundreds of professionals who trust Fixline for enterprise-grade diagnostics, repair, and infrastructure.
           </p>
-          <p className="text-blue-200 mb-10 max-w-2xl mx-auto">
-            No pressure. Just a clear understanding of the problem and how to solve it.
-          </p>
-          <button className="bg-white text-brand-blue hover:bg-slate-50 px-10 py-4 rounded-full text-lg font-bold transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-            Get Support Now
-          </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button className="group bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
+              Start Free Diagnosis
+              <div className="w-0 overflow-hidden opacity-0 group-hover:w-5 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
+                <ArrowRight weight="bold" size={20} className="shrink-0" />
+              </div>
+            </button>
+          </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
       <footer className="bg-brand-navy text-slate-400 py-12 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
             <span className="font-heading font-bold text-2xl tracking-tight text-white">
               Fix<span className="text-brand-blue">l</span>ine
