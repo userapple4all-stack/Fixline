@@ -108,17 +108,16 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl relative">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden relative">
                 <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply z-10"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1556740738-f6a622aa04b1?auto=format&fit=crop&q=80&w=1200" 
-                  alt="IT support professional" 
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
+                  src="/images/support-image.webp" 
+                  alt="IT support professional on a call" 
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               {/* Floating badge */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-4 z-20 animate-bounce-slow">
+              <div className="absolute bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-4 z-20 animate-bounce-slow">
                 <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue">
                   <CheckCircle weight="fill" size={24} />
                 </div>
