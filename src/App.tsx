@@ -7,8 +7,8 @@ import {
   HardDrives, 
   ShieldCheck, 
   FileText, 
-  WifiHigh, 
-  Cpu, 
+  Network, 
+  DesktopTower, 
   TerminalWindow, 
   Certificate,
   ArrowRight,
@@ -16,7 +16,6 @@ import {
   List,
   X,
   CaretDown,
-  ChatCircle,
   PlugsConnected
 } from '@phosphor-icons/react';
 
@@ -29,7 +28,7 @@ const servicesData = [
     features: ['System crashes & slow performance', 'Malware and viruses', 'Driver & update failures'],
     buttonText: 'Start Remote Fix',
     icon: Desktop,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800'
+    image: '/images/customer-support-agent-at-fixline.webp'
   },
   {
     id: 'lab',
@@ -39,7 +38,7 @@ const servicesData = [
     features: ['Motherboard repair', 'SSD & data recovery', 'Component replacement & upgrades'],
     buttonText: 'Book a Lab Repair',
     icon: Wrench,
-    image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=800'
+    image: '/images/fixline-hardware-repair.webp'
   },
   {
     id: 'consult',
@@ -49,7 +48,7 @@ const servicesData = [
     features: ['Workstation planning', 'Office network setup', 'Hardware procurement & rollout'],
     buttonText: 'Speak with a Consultant',
     icon: HardDrives,
-    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800'
+    image: '/images/fixline-consultation.webp'
   },
   {
     id: 'install',
@@ -80,6 +79,7 @@ const hardwareLogos = [
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'contact'>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(servicesData[0].id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
@@ -214,10 +214,200 @@ export default function App() {
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
-              <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); }} className={`text-sm font-medium transition-colors ${currentPage === 'home' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Home</a>
-              <a href="#services" onClick={() => setCurrentPage('home')} className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Services</a>
-              <a href="#why-us" onClick={() => setCurrentPage('home')} className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Why Fixline</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); }} className={`text-sm font-medium transition-colors ${currentPage === 'contact' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Contact</a>
+              {/* Services Dropdown */}
+              <div className="relative group">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                  Services
+                  <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 flex gap-8 w-[650px]">
+                    {/* Left Column */}
+                    <div className="flex-1">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">What we do</p>
+                      <div className="flex flex-col gap-5">
+                        <a href="#" className="flex gap-4 group/item">
+                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                            <Desktop size={20} weight="regular" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Remote Support</p>
+                            <p className="text-xs text-slate-500 leading-snug">Fast software repair without leaving your desk.</p>
+                          </div>
+                        </a>
+                        <a href="#" className="flex gap-4 group/item">
+                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                            <Wrench size={20} weight="regular" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Hardware Lab</p>
+                            <p className="text-xs text-slate-500 leading-snug">Physical repairs, upgrades, and maintenance.</p>
+                          </div>
+                        </a>
+                        <a href="#" className="flex gap-4 group/item">
+                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                            <HardDrives size={20} weight="regular" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Technical Consultation</p>
+                            <p className="text-xs text-slate-500 leading-snug">Expert advice for your IT infrastructure.</p>
+                          </div>
+                        </a>
+                        <a href="#" className="flex gap-4 group/item">
+                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                            <TerminalWindow size={20} weight="regular" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Software Deployments</p>
+                            <p className="text-xs text-slate-500 leading-snug">Roll out updates and new systems securely.</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Featured Card */}
+                    <div className="w-[260px] bg-slate-50 rounded-xl p-5 border border-slate-100 flex flex-col shrink-0">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Coming Soon</p>
+                      <div className="bg-white border border-slate-100 rounded-lg p-4 mb-4 shadow-sm">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-full bg-slate-100"></div>
+                          <div className="flex-1 space-y-2">
+                            <div className="h-2 bg-slate-100 rounded w-3/4"></div>
+                            <div className="h-2 bg-slate-100 rounded w-full"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="h-2 bg-slate-100 rounded w-full"></div>
+                          <div className="h-2 bg-slate-100 rounded w-5/6"></div>
+                        </div>
+                      </div>
+                      <p className="text-sm font-bold text-brand-navy mb-1">Fixline OS</p>
+                      <p className="text-xs text-slate-500 leading-snug mb-3">A dedicated operating system optimized for diagnostics and repair.</p>
+                      <a href="#" className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 mt-auto">
+                        Read the changelog <ArrowRight size={12} weight="bold" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Products Dropdown */}
+              <div className="relative group">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                  Products
+                  <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[350px]">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Our Products</p>
+                    <div className="flex flex-col gap-5">
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <TerminalWindow size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Fixline OS</p>
+                          <p className="text-xs text-slate-500 leading-snug">The ultimate diagnostic operating system.</p>
+                        </div>
+                      </a>
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <Wrench size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Fixline Tools</p>
+                          <p className="text-xs text-slate-500 leading-snug">Professional utilities for technicians.</p>
+                        </div>
+                      </a>
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <DesktopTower size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Fixline Builds</p>
+                          <p className="text-xs text-slate-500 leading-snug">Custom hardware configurations.</p>
+                        </div>
+                      </a>
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <Network size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Fixline Networks</p>
+                          <p className="text-xs text-slate-500 leading-snug">Enterprise networking solutions.</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Resources Dropdown */}
+              <div className="relative group">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                  Resources
+                  <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[300px]">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Learn & Grow</p>
+                    <div className="flex flex-col gap-5">
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <FileText size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Blog</p>
+                          <p className="text-xs text-slate-500 leading-snug">Latest news and technical guides.</p>
+                        </div>
+                      </a>
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <Certificate size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">University</p>
+                          <p className="text-xs text-slate-500 leading-snug">Training and certification programs.</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Company Dropdown */}
+              <div className="relative group">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                  Company
+                  <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[300px]">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">About Fixline</p>
+                    <div className="flex flex-col gap-5">
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <ShieldCheck size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">About Us</p>
+                          <p className="text-xs text-slate-500 leading-snug">Our mission, vision, and team.</p>
+                        </div>
+                      </a>
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <PlugsConnected size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Partners</p>
+                          <p className="text-xs text-slate-500 leading-snug">Our trusted technology partners.</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <button 
                 onClick={() => setCurrentPage('contact')}
                 className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md"
@@ -239,14 +429,83 @@ export default function App() {
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-4 flex flex-col gap-4 z-50">
-            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); setIsMobileMenuOpen(false); }} className={`text-base font-medium p-2 ${currentPage === 'home' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Home</a>
-            <a href="#services" onClick={() => { setCurrentPage('home'); setIsMobileMenuOpen(false); }} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Services</a>
-            <a href="#why-us" onClick={() => { setCurrentPage('home'); setIsMobileMenuOpen(false); }} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Why Fixline</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); setIsMobileMenuOpen(false); }} className={`text-base font-medium p-2 ${currentPage === 'contact' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Contact</a>
+          <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-4 flex flex-col gap-2 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
+            
+            {/* Services Mobile Dropdown */}
+            <div className="flex flex-col border-b border-slate-100 pb-2">
+              <button 
+                onClick={() => setOpenMobileDropdown(openMobileDropdown === 'services' ? null : 'services')}
+                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+              >
+                Services
+                <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'services' ? 'rotate-180' : ''}`} />
+              </button>
+              {openMobileDropdown === 'services' && (
+                <div className="flex flex-col gap-1 pl-4 pb-2">
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Remote Support</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Hardware Lab</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Technical Consultation</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Software Deployments</a>
+                </div>
+              )}
+            </div>
+
+            {/* Products Mobile Dropdown */}
+            <div className="flex flex-col border-b border-slate-100 pb-2">
+              <button 
+                onClick={() => setOpenMobileDropdown(openMobileDropdown === 'products' ? null : 'products')}
+                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+              >
+                Products
+                <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'products' ? 'rotate-180' : ''}`} />
+              </button>
+              {openMobileDropdown === 'products' && (
+                <div className="flex flex-col gap-1 pl-4 pb-2">
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Fixline OS</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Fixline Tools</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Fixline Builds</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Fixline Networks</a>
+                </div>
+              )}
+            </div>
+
+            {/* Resources Mobile Dropdown */}
+            <div className="flex flex-col border-b border-slate-100 pb-2">
+              <button 
+                onClick={() => setOpenMobileDropdown(openMobileDropdown === 'resources' ? null : 'resources')}
+                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+              >
+                Resources
+                <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'resources' ? 'rotate-180' : ''}`} />
+              </button>
+              {openMobileDropdown === 'resources' && (
+                <div className="flex flex-col gap-1 pl-4 pb-2">
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Blog</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">University</a>
+                </div>
+              )}
+            </div>
+
+            {/* Company Mobile Dropdown */}
+            <div className="flex flex-col border-b border-slate-100 pb-2">
+              <button 
+                onClick={() => setOpenMobileDropdown(openMobileDropdown === 'company' ? null : 'company')}
+                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+              >
+                Company
+                <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'company' ? 'rotate-180' : ''}`} />
+              </button>
+              {openMobileDropdown === 'company' && (
+                <div className="flex flex-col gap-1 pl-4 pb-2">
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">About Us</a>
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Partners</a>
+                </div>
+              )}
+            </div>
+
             <button 
               onClick={() => { setCurrentPage('contact'); setIsMobileMenuOpen(false); }}
-              className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-base font-medium transition-all shadow-sm w-full mt-2"
+              className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-base font-medium transition-all shadow-sm w-full mt-4"
             >
               Get Support
             </button>
@@ -265,10 +524,10 @@ export default function App() {
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/10 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="max-w-2xl">
+            <div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -286,14 +545,14 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy"
               >
-                The technical backbone for <span className="text-brand-blue">modern business.</span>
+                The technical backbone for <span className="text-brand-blue">modern operations.</span>
               </motion.h1>
               
               <motion.p 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-xl"
+                className="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-lg"
               >
                 We elevate the standard of technical support by providing enterprise-grade diagnostics, repair, and infrastructure planning with complete transparency and zero compromises.
               </motion.p>
@@ -860,7 +1119,7 @@ export default function App() {
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
-                <WifiHigh size={28} weight="duotone" />
+                <Network size={28} weight="duotone" />
               </div>
               <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Networks</h4>
               <p className="text-slate-500 relative z-10 leading-relaxed font-light">Office Wi-Fi, secure routing, and reliable connectivity engineered for modern workspaces.</p>
@@ -875,7 +1134,7 @@ export default function App() {
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
-                <Cpu size={28} weight="duotone" />
+                <DesktopTower size={28} weight="duotone" />
               </div>
               <h4 className="font-heading text-2xl font-bold text-brand-navy mb-3 relative z-10">Fixline Builds</h4>
               <p className="text-slate-500 relative z-10 leading-relaxed font-light">Custom computers designed specifically for performance, stability, and long-term reliability.</p>

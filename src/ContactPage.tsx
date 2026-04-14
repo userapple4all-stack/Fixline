@@ -84,8 +84,8 @@ export default function ContactPage() {
           <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -95,9 +95,9 @@ export default function ContactPage() {
                 Get in Touch
               </span>
               <h1 className="font-heading text-5xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy">
-                We're here to <span className="text-brand-blue">help.</span>
+                We're here to <br className="hidden sm:block" /><span className="text-brand-blue">help.</span>
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed max-w-xl">
+              <p className="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed max-w-lg">
                 Whether you're facing a critical system failure or planning a major infrastructure upgrade, our technical experts are ready to assist you.
               </p>
             </motion.div>
@@ -108,7 +108,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden relative">
+              <div className="aspect-[5/4] rounded-2xl overflow-hidden relative">
                 <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply z-10"></div>
                 <img 
                   src="/images/support-image.webp" 
@@ -117,13 +117,13 @@ export default function ContactPage() {
                 />
               </div>
               {/* Floating badge */}
-              <div className="absolute bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-4 z-20 animate-bounce-slow">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue">
-                  <CheckCircle weight="fill" size={24} />
+              <div className="absolute -left-4 md:-left-8 -bottom-6 md:-bottom-8 bg-white p-3 md:p-5 rounded-xl md:rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 md:gap-4 z-20 animate-bounce-slow">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                  <CheckCircle weight="fill" className="w-5 h-5 md:w-7 md:h-7" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-brand-navy">Expert Support</p>
-                  <p className="text-xs text-slate-500">Fast & Reliable</p>
+                  <p className="text-xs md:text-sm font-bold text-brand-navy whitespace-nowrap">Expert Support</p>
+                  <p className="text-[10px] md:text-xs text-slate-500 whitespace-nowrap">Fast & Reliable</p>
                 </div>
               </div>
             </motion.div>
@@ -133,8 +133,8 @@ export default function ContactPage() {
 
       {/* Contact Info & Form Section */}
       <section className="py-20 lg:py-32 relative">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-5 gap-16">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-24">
             
             {/* Contact Information */}
             <motion.div 
@@ -142,60 +142,64 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-2 space-y-10"
+              className="lg:col-span-2 h-full"
             >
-              <div>
-                <h2 className="font-heading text-3xl font-bold text-brand-navy mb-4">Contact Information</h2>
-                <p className="text-slate-600 leading-relaxed">
-                  Reach out to us through any of these channels. We aim to respond to all inquiries within 2 hours during business days.
-                </p>
-              </div>
-
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
-                    <MapPin weight="fill" size={24} />
-                  </div>
+              <div className="bg-white rounded-2xl border border-slate-100 p-8 md:p-10 h-full flex flex-col">
+                <div className="space-y-10 flex-grow">
                   <div>
-                    <h3 className="font-bold text-brand-navy mb-1">Our Location</h3>
-                    <p className="text-slate-600">Apic Centre, Westlands</p>
-                    <p className="text-slate-500 text-sm mt-1">Nairobi, Kenya</p>
+                    <h2 className="font-heading text-3xl font-bold text-brand-navy mb-4">Contact Information</h2>
+                    <p className="text-slate-600 leading-relaxed">
+                      Reach out to us through any of these channels. We aim to respond to all inquiries within 2 hours during business days.
+                    </p>
+                  </div>
+
+                  <div className="space-y-8">
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                        <MapPin weight="fill" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-brand-navy mb-1">Our Location</h3>
+                        <p className="text-slate-600">Apic Centre, Westlands</p>
+                        <p className="text-slate-500 text-sm mt-1">Nairobi, Kenya</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                        <Phone weight="fill" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-brand-navy mb-1">Phone</h3>
+                        <p className="text-slate-600">[Phone Number Placeholder]</p>
+                        <p className="text-slate-500 text-sm mt-1">Mon-Fri, 8am - 6pm</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                        <EnvelopeSimple weight="fill" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-brand-navy mb-1">Email</h3>
+                        <p className="text-slate-600">[Email Placeholder]</p>
+                        <p className="text-slate-500 text-sm mt-1">Online support</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
-                    <Phone weight="fill" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-brand-navy mb-1">Phone</h3>
-                    <p className="text-slate-600">[Phone Number Placeholder]</p>
-                    <p className="text-slate-500 text-sm mt-1">Mon-Fri, 8am - 6pm</p>
-                  </div>
+                {/* Book a Call Card */}
+                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 mt-10">
+                  <h3 className="font-bold text-brand-navy mb-2">Book a quick call</h3>
+                  <p className="text-sm text-slate-600 mb-4">
+                    Need immediate assistance or want to discuss a project? Schedule a brief call with our technical team.
+                  </p>
+                  <button className="bg-white border border-slate-200 hover:border-brand-blue text-brand-navy hover:text-brand-blue px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-fit">
+                    <Phone weight="bold" size={16} />
+                    Schedule Call
+                  </button>
                 </div>
-
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
-                    <EnvelopeSimple weight="fill" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-brand-navy mb-1">Email</h3>
-                    <p className="text-slate-600">[Email Placeholder]</p>
-                    <p className="text-slate-500 text-sm mt-1">Online support</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Book a Call Card */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 mt-8">
-                <h3 className="font-bold text-brand-navy mb-2">Book a quick call</h3>
-                <p className="text-sm text-slate-600 mb-4">
-                  Need immediate assistance or want to discuss a project? Schedule a brief call with our technical team.
-                </p>
-                <button className="bg-white border border-slate-200 hover:border-brand-blue text-brand-navy hover:text-brand-blue px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-fit">
-                  <Phone weight="bold" size={16} />
-                  Schedule Call
-                </button>
               </div>
             </motion.div>
 
@@ -205,9 +209,9 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-3"
+              className="lg:col-span-3 h-full"
             >
-              <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 md:p-10">
+              <div className="bg-white rounded-2xl border border-slate-100 p-8 md:p-10 h-full">
                 <h3 className="font-heading text-2xl font-bold text-brand-navy mb-6">Send us a message</h3>
                 
                 {isSubmitted ? (
@@ -365,33 +369,35 @@ export default function ContactPage() {
       </section>
 
       {/* Appraisal CTA Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="py-12 lg:py-16 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl"
-      >
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=2000')] opacity-20 mix-blend-overlay bg-cover bg-center"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-blue/50 to-brand-blue"></div>
-        
-        <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
-            Ready to upgrade your IT experience?
-          </h2>
-          <p className="text-base text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Partner with Fixline for enterprise-grade IT solutions and personalized technical care.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="group bg-white text-brand-blue hover:bg-slate-50 px-6 py-3 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto flex items-center justify-center">
-              Partner With Us
-              <div className="w-0 overflow-hidden opacity-0 group-hover:w-4 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
-                <ArrowRight weight="bold" size={16} className="shrink-0" />
-              </div>
-            </button>
+      <section className="pb-20 lg:pb-32 px-4 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="max-w-7xl mx-auto py-12 lg:py-16 bg-brand-blue relative overflow-hidden rounded-3xl"
+        >
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=2000')] opacity-20 mix-blend-overlay bg-cover bg-center"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-blue/50 to-brand-blue"></div>
+          
+          <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+              Ready to upgrade your IT experience?
+            </h2>
+            <p className="text-base text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Partner with Fixline for enterprise-grade IT solutions and personalized technical care.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button className="group bg-white text-brand-blue hover:bg-slate-50 px-6 py-3 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto flex items-center justify-center">
+                Partner With Us
+                <div className="w-0 overflow-hidden opacity-0 group-hover:w-4 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
+                  <ArrowRight weight="bold" size={16} className="shrink-0" />
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.div>
+      </section>
     </div>
   );
 }
