@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
+import ContactPage from './ContactPage';
 import { 
   Wrench, 
   Desktop, 
@@ -69,36 +70,66 @@ const hardwareLogos = [
   { name: 'Apple', url: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', className: 'h-7 md:h-8 w-auto mb-1' },
   { name: 'Microsoft', url: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg', className: 'h-6 md:h-7 w-auto' },
   { name: 'Asus', url: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg', className: 'h-4 md:h-5 w-auto' },
+  { name: 'MSI', url: 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/msi.svg', className: 'h-4 md:h-5 w-auto opacity-70' },
+  { name: 'ROG', url: 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/republicofgamers.svg', className: 'h-6 md:h-7 w-auto opacity-70' },
+  { name: 'Cisco', url: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg', className: 'h-6 md:h-7 w-auto' },
+  { name: 'Ubiquiti', url: 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/ubiquiti.svg', className: 'h-6 md:h-7 w-auto opacity-70' },
+  { name: 'Hewlett Packard Enterprise', url: 'https://upload.wikimedia.org/wikipedia/commons/4/46/Hewlett_Packard_Enterprise_logo.svg', className: 'h-5 md:h-6 w-auto' },
 ];
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'contact'>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(servicesData[0].id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const [typedWelcomeText, setTypedWelcomeText] = useState('');
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullWelcomeText = "Welcome to Fixline";
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    let currentIndex = 0;
+    
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        // Reset and start typing
+        setTypedWelcomeText('');
+        setIsTypingComplete(false);
+        let currentIndex = 0;
 
-    const typeNextChar = () => {
-      if (currentIndex < fullWelcomeText.length) {
-        setTypedWelcomeText(fullWelcomeText.slice(0, currentIndex + 1));
-        currentIndex++;
-        
-        // Calculate delay: starts fast (30ms), ends slow (up to ~200ms)
-        const progress = currentIndex / fullWelcomeText.length;
-        const delay = 30 + (Math.pow(progress, 3) * 170); 
-        
-        timeout = setTimeout(typeNextChar, delay);
+        const typeNextChar = () => {
+          if (currentIndex < fullWelcomeText.length) {
+            setTypedWelcomeText(fullWelcomeText.slice(0, currentIndex + 1));
+            currentIndex++;
+            
+            // Fast, consistent typing speed
+            const delay = 40; 
+            
+            timeout = setTimeout(typeNextChar, delay);
+          } else {
+            setIsTypingComplete(true);
+          }
+        };
+
+        clearTimeout(timeout);
+        // Start typing after a short initial delay to sync with fade-in
+        timeout = setTimeout(typeNextChar, 600);
+      } else {
+        clearTimeout(timeout);
+      }
+    }, { threshold: 0.2 }); // Trigger when 20% of hero is visible (better for mobile)
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
       }
     };
-
-    // Start typing after a short initial delay to sync with fade-in
-    timeout = setTimeout(typeNextChar, 600);
-
-    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -177,16 +208,20 @@ export default function App() {
       <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
               <span className="font-heading font-bold text-3xl tracking-tight text-brand-navy">
                 Fix<span className="text-brand-blue">l</span>ine
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
-              <a href="#services" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Services</a>
-              <a href="#why-us" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Why Fixline</a>
-              <a href="#products" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Products</a>
-              <button className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md">
+              <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); }} className={`text-sm font-medium transition-colors ${currentPage === 'home' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Home</a>
+              <a href="#services" onClick={() => setCurrentPage('home')} className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Services</a>
+              <a href="#why-us" onClick={() => setCurrentPage('home')} className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors">Why Fixline</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); }} className={`text-sm font-medium transition-colors ${currentPage === 'contact' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Contact</a>
+              <button 
+                onClick={() => setCurrentPage('contact')}
+                className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md"
+              >
                 Get Support
               </button>
             </div>
@@ -205,18 +240,24 @@ export default function App() {
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-4 flex flex-col gap-4 z-50">
-            <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Services</a>
-            <a href="#why-us" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Why Fixline</a>
-            <a href="#products" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Products</a>
-            <button className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-base font-medium transition-all shadow-sm w-full mt-2">
+            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); setIsMobileMenuOpen(false); }} className={`text-base font-medium p-2 ${currentPage === 'home' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Home</a>
+            <a href="#services" onClick={() => { setCurrentPage('home'); setIsMobileMenuOpen(false); }} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Services</a>
+            <a href="#why-us" onClick={() => { setCurrentPage('home'); setIsMobileMenuOpen(false); }} className="text-base font-medium text-slate-600 hover:text-brand-blue p-2">Why Fixline</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); setIsMobileMenuOpen(false); }} className={`text-base font-medium p-2 ${currentPage === 'contact' ? 'text-brand-blue' : 'text-slate-600 hover:text-brand-blue'}`}>Contact</a>
+            <button 
+              onClick={() => { setCurrentPage('contact'); setIsMobileMenuOpen(false); }}
+              className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-base font-medium transition-all shadow-sm w-full mt-2"
+            >
               Get Support
             </button>
           </div>
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden bg-slate-50">
+      {currentPage === 'home' ? (
+        <>
+          {/* Hero Section */}
+          <section ref={heroRef} className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden bg-slate-50">
         {/* Bright, inviting background elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
@@ -233,9 +274,9 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm min-w-[160px] text-center">
+                <span className="inline-block py-1.5 px-4 rounded-full bg-white text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 min-w-[150px] sm:min-w-[160px] text-center whitespace-nowrap">
                   {typedWelcomeText}
-                  <span className="animate-pulse ml-0.5">|</span>
+                  {!isTypingComplete && <span className="animate-pulse ml-0.5">|</span>}
                 </span>
               </motion.div>
               
@@ -894,7 +935,10 @@ export default function App() {
             Join hundreds of professionals who trust Fixline for enterprise-grade diagnostics, repair, and infrastructure.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="group bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
+            <button 
+              onClick={() => setCurrentPage('contact')}
+              className="group bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center"
+            >
               Start Free Diagnosis
               <div className="w-0 overflow-hidden opacity-0 group-hover:w-5 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
                 <ArrowRight weight="bold" size={20} className="shrink-0" />
@@ -903,11 +947,15 @@ export default function App() {
           </div>
         </div>
       </motion.section>
+      </>
+      ) : (
+        <ContactPage />
+      )}
 
       {/* Footer */}
       <footer className="bg-brand-navy text-slate-400 py-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
             <span className="font-heading font-bold text-2xl tracking-tight text-white">
               Fix<span className="text-brand-blue">l</span>ine
             </span>
@@ -915,7 +963,7 @@ export default function App() {
           <div className="flex gap-8 text-sm">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); }} className="hover:text-white transition-colors">Contact</a>
           </div>
           <div className="text-sm">
             &copy; {new Date().getFullYear()} Fixline. All rights reserved.
