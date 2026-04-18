@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import ContactPage from './ContactPage';
+import customerSupportImg from './assets/images/customer-support-agent-at-fixline.webp';
+import hardwareRepairImg from './assets/images/fixline-hardware-repair.webp';
+import consultationImg from './assets/images/fixline-consultation.webp';
 import { 
   Wrench, 
   Desktop, 
@@ -12,12 +15,23 @@ import {
   TerminalWindow, 
   Certificate,
   ArrowRight,
+  ArrowUpRight,
+  Phone,
+  XLogo,
+  FacebookLogo,
+  LinkedinLogo,
+  InstagramLogo,
   CheckCircle,
   List,
   X,
   CaretDown,
-  PlugsConnected
+  PlugsConnected,
+  Lifebuoy,
+  EnvelopeSimple,
+  MapPin
 } from '@phosphor-icons/react';
+
+import AboutPage from './AboutPage';
 
 const servicesData = [
   {
@@ -28,7 +42,7 @@ const servicesData = [
     features: ['System crashes & slow performance', 'Malware and viruses', 'Driver & update failures'],
     buttonText: 'Start Remote Fix',
     icon: Desktop,
-    image: '/images/customer-support-agent-at-fixline.webp'
+    image: customerSupportImg
   },
   {
     id: 'lab',
@@ -38,7 +52,7 @@ const servicesData = [
     features: ['Motherboard repair', 'SSD & data recovery', 'Component replacement & upgrades'],
     buttonText: 'Book a Lab Repair',
     icon: Wrench,
-    image: '/images/fixline-hardware-repair.webp'
+    image: hardwareRepairImg
   },
   {
     id: 'consult',
@@ -48,7 +62,7 @@ const servicesData = [
     features: ['Workstation planning', 'Office network setup', 'Hardware procurement & rollout'],
     buttonText: 'Speak with a Consultant',
     icon: HardDrives,
-    image: '/images/fixline-consultation.webp'
+    image: consultationImg
   },
   {
     id: 'install',
@@ -77,7 +91,7 @@ const hardwareLogos = [
 ];
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'contact'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'contact'>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(servicesData[0].id);
@@ -86,6 +100,14 @@ export default function App() {
   const [typedWelcomeText, setTypedWelcomeText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullWelcomeText = "Welcome to Fixline";
+
+  const navigateToPage = (page: 'home' | 'about' | 'contact') => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -137,68 +159,77 @@ export default function App() {
     if (!container) return;
 
     let intervalId: NodeJS.Timeout;
+    let isHovering = false;
+    let isTouching = false;
+    let isScrolling = false;
+    let scrollTimeout: NodeJS.Timeout;
 
-    const startAutoScroll = () => {
-      clearInterval(intervalId);
-      intervalId = setInterval(() => {
-        if (!container) return;
-        
-        const cards = Array.from(container.querySelectorAll('.timeline-card')) as HTMLElement[];
-        if (!cards.length) return;
+    const scrollToNext = () => {
+      // Skip auto-scroll if user is interacting
+      if (!container || isHovering || isTouching || isScrolling) return;
+      
+      const cards = Array.from(container.querySelectorAll('.timeline-card')) as HTMLElement[];
+      if (!cards.length) return;
 
-        const scrollLeft = container.scrollLeft;
-        const containerCenter = scrollLeft + container.clientWidth / 2;
-        
-        let currentIndex = 0;
-        let minDiff = Infinity;
+      const scrollLeft = container.scrollLeft;
+      const containerCenter = scrollLeft + container.clientWidth / 2;
+      
+      let currentIndex = 0;
+      let minDiff = Infinity;
 
-        cards.forEach((card, index) => {
-          const cardCenter = card.offsetLeft + card.clientWidth / 2;
-          const diff = Math.abs(cardCenter - containerCenter);
-          if (diff < minDiff) {
-            minDiff = diff;
-            currentIndex = index;
-          }
-        });
-
-        let nextIndex = currentIndex + 1;
-        if (nextIndex >= cards.length) {
-          nextIndex = 0;
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const diff = Math.abs(cardCenter - containerCenter);
+        if (diff < minDiff) {
+          minDiff = diff;
+          currentIndex = index;
         }
+      });
 
-        const nextCard = cards[nextIndex];
-        const targetScroll = nextCard.offsetLeft - (container.clientWidth / 2) + (nextCard.clientWidth / 2);
-        
-        container.scrollTo({
-          left: targetScroll,
-          behavior: 'smooth'
-        });
-      }, 3500);
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= cards.length) {
+        nextIndex = 0;
+      }
+
+      const nextCard = cards[nextIndex];
+      const targetScroll = nextCard.offsetLeft - (container.clientWidth / 2) + (nextCard.clientWidth / 2);
+      
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
     };
 
-    const stopAutoScroll = () => {
-      clearInterval(intervalId);
+    // Run every 3.5 seconds
+    intervalId = setInterval(scrollToNext, 3500);
+
+    // Event handlers to detect user interaction
+    const onMouseEnter = () => { isHovering = true; };
+    const onMouseLeave = () => { isHovering = false; };
+    const onTouchStart = () => { isTouching = true; };
+    const onTouchEnd = () => { isTouching = false; };
+    const onScroll = () => {
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 1000); // Wait 1 second after scrolling stops before resuming auto-scroll
     };
 
-    startAutoScroll();
-
-    const isHoverSupported = window.matchMedia('(hover: hover)').matches;
-    if (isHoverSupported) {
-      container.addEventListener('mouseenter', stopAutoScroll);
-      container.addEventListener('mouseleave', startAutoScroll);
-    }
-    
-    container.addEventListener('touchstart', stopAutoScroll, { passive: true });
-    container.addEventListener('touchend', startAutoScroll, { passive: true });
+    container.addEventListener('mouseenter', onMouseEnter);
+    container.addEventListener('mouseleave', onMouseLeave);
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+    container.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      stopAutoScroll();
-      if (isHoverSupported) {
-        container.removeEventListener('mouseenter', stopAutoScroll);
-        container.removeEventListener('mouseleave', startAutoScroll);
-      }
-      container.removeEventListener('touchstart', stopAutoScroll);
-      container.removeEventListener('touchend', startAutoScroll);
+      clearInterval(intervalId);
+      clearTimeout(scrollTimeout);
+      container.removeEventListener('mouseenter', onMouseEnter);
+      container.removeEventListener('mouseleave', onMouseLeave);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchend', onTouchEnd);
+      container.removeEventListener('scroll', onScroll);
     };
   }, []);
 
@@ -208,19 +239,19 @@ export default function App() {
       <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigateToPage('home')}>
               <span className="font-heading font-bold text-3xl tracking-tight text-brand-navy">
                 Fix<span className="text-brand-blue">l</span>ine
               </span>
             </div>
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-8">
               {/* Services Dropdown */}
               <div className="relative group">
-                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue group-hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
                   Services
                   <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
                 </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-150 ease-out z-50">
                   <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 flex gap-8 w-[650px]">
                     {/* Left Column */}
                     <div className="flex-1">
@@ -293,11 +324,11 @@ export default function App() {
 
               {/* Products Dropdown */}
               <div className="relative group">
-                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue group-hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
                   Products
                   <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
                 </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-150 ease-out z-50">
                   <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[350px]">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Our Products</p>
                     <div className="flex flex-col gap-5">
@@ -344,14 +375,23 @@ export default function App() {
 
               {/* Resources Dropdown */}
               <div className="relative group">
-                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue group-hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
                   Resources
                   <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
                 </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-150 ease-out z-50">
                   <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[300px]">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Learn & Grow</p>
                     <div className="flex flex-col gap-5">
+                      <a href="#" className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <Lifebuoy size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Support Centre</p>
+                          <p className="text-xs text-slate-500 leading-snug">Book repair or consultation.</p>
+                        </div>
+                      </a>
                       <a href="#" className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <FileText size={20} weight="regular" />
@@ -375,23 +415,36 @@ export default function App() {
                 </div>
               </div>
 
+              <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors py-2">
+                Pricing
+              </a>
+
               {/* Company Dropdown */}
               <div className="relative group">
-                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
+                <button className="text-sm font-medium text-slate-600 hover:text-brand-blue group-hover:text-brand-blue transition-colors flex items-center gap-1 py-2">
                   Company
                   <CaretDown size={12} weight="bold" className="group-hover:rotate-180 transition-transform" />
                 </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-150 ease-out z-50">
                   <div className="bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 p-6 w-[300px]">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">About Fixline</p>
                     <div className="flex flex-col gap-5">
-                      <a href="#" className="flex gap-4 group/item">
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('about'); }} className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <ShieldCheck size={20} weight="regular" />
                         </div>
                         <div>
                           <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">About Us</p>
                           <p className="text-xs text-slate-500 leading-snug">Our mission, vision, and team.</p>
+                        </div>
+                      </a>
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('contact'); }} className="flex gap-4 group/item">
+                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
+                          <EnvelopeSimple size={20} weight="regular" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Contact Us</p>
+                          <p className="text-xs text-slate-500 leading-snug">Get in touch with our team.</p>
                         </div>
                       </a>
                       <a href="#" className="flex gap-4 group/item">
@@ -409,13 +462,13 @@ export default function App() {
               </div>
 
               <button 
-                onClick={() => setCurrentPage('contact')}
+                onClick={() => navigateToPage('contact')}
                 className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md"
               >
                 Get Support
               </button>
             </div>
-            <div className="md:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button 
                 className="text-slate-600 hover:text-brand-navy p-2"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -429,13 +482,13 @@ export default function App() {
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-4 flex flex-col gap-2 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
+          <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-4 flex flex-col gap-2 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
             
             {/* Services Mobile Dropdown */}
             <div className="flex flex-col border-b border-slate-100 pb-2">
               <button 
                 onClick={() => setOpenMobileDropdown(openMobileDropdown === 'services' ? null : 'services')}
-                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+                className={`flex items-center justify-between py-3 px-2 text-base font-medium transition-colors ${openMobileDropdown === 'services' ? 'text-brand-blue' : 'text-brand-navy'}`}
               >
                 Services
                 <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'services' ? 'rotate-180' : ''}`} />
@@ -454,7 +507,7 @@ export default function App() {
             <div className="flex flex-col border-b border-slate-100 pb-2">
               <button 
                 onClick={() => setOpenMobileDropdown(openMobileDropdown === 'products' ? null : 'products')}
-                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+                className={`flex items-center justify-between py-3 px-2 text-base font-medium transition-colors ${openMobileDropdown === 'products' ? 'text-brand-blue' : 'text-brand-navy'}`}
               >
                 Products
                 <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'products' ? 'rotate-180' : ''}`} />
@@ -473,38 +526,44 @@ export default function App() {
             <div className="flex flex-col border-b border-slate-100 pb-2">
               <button 
                 onClick={() => setOpenMobileDropdown(openMobileDropdown === 'resources' ? null : 'resources')}
-                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+                className={`flex items-center justify-between py-3 px-2 text-base font-medium transition-colors ${openMobileDropdown === 'resources' ? 'text-brand-blue' : 'text-brand-navy'}`}
               >
                 Resources
                 <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'resources' ? 'rotate-180' : ''}`} />
               </button>
               {openMobileDropdown === 'resources' && (
                 <div className="flex flex-col gap-1 pl-4 pb-2">
+                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Support Centre</a>
                   <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Blog</a>
                   <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">University</a>
                 </div>
               )}
             </div>
 
+            <a href="#" className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy border-b border-slate-100">
+              Pricing
+            </a>
+
             {/* Company Mobile Dropdown */}
             <div className="flex flex-col border-b border-slate-100 pb-2">
               <button 
                 onClick={() => setOpenMobileDropdown(openMobileDropdown === 'company' ? null : 'company')}
-                className="flex items-center justify-between py-3 px-2 text-base font-medium text-brand-navy"
+                className={`flex items-center justify-between py-3 px-2 text-base font-medium transition-colors ${openMobileDropdown === 'company' ? 'text-brand-blue' : 'text-brand-navy'}`}
               >
                 Company
                 <CaretDown size={16} weight="bold" className={`transition-transform ${openMobileDropdown === 'company' ? 'rotate-180' : ''}`} />
               </button>
               {openMobileDropdown === 'company' && (
                 <div className="flex flex-col gap-1 pl-4 pb-2">
-                  <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">About Us</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('about'); }} className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">About Us</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('contact'); }} className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Contact Us</a>
                   <a href="#" className="text-sm font-medium text-slate-600 hover:text-brand-blue py-2">Partners</a>
                 </div>
               )}
             </div>
 
             <button 
-              onClick={() => { setCurrentPage('contact'); setIsMobileMenuOpen(false); }}
+              onClick={() => navigateToPage('contact')}
               className="bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-base font-medium transition-all shadow-sm w-full mt-4"
             >
               Get Support
@@ -545,7 +604,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy"
               >
-                The technical backbone for <span className="text-brand-blue">modern operations.</span>
+                The operational backbone for <span className="text-brand-blue">modern technology.</span>
               </motion.h1>
               
               <motion.p 
@@ -554,7 +613,7 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-lg"
               >
-                We elevate the standard of technical support by providing enterprise-grade diagnostics, repair, and infrastructure planning with complete transparency and zero compromises.
+                We provide dependable computer repair, system diagnostics, IT support, and infrastructure services that keep technology running reliably for individuals and businesses.
               </motion.p>
               
               <motion.div 
@@ -743,7 +802,7 @@ export default function App() {
                     <img 
                       src={service.image} 
                       alt={service.title} 
-                      className="w-full h-[250px] sm:h-[350px] lg:h-[450px] object-cover rounded-3xl shadow-lg border border-slate-100"
+                      className="w-full h-[250px] sm:h-[350px] lg:h-[450px] object-cover rounded-xl border border-slate-100"
                       referrerPolicy="no-referrer"
                     />
                   </div>
@@ -772,7 +831,10 @@ export default function App() {
             transition={{ duration: 0.6 }}
             className="mb-16 md:mb-20 max-w-3xl"
           >
-            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4">How it works</h2>
+            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
+              <span className="w-8 h-px bg-brand-blue"></span>
+              How it works
+            </h2>
             <h3 className="font-heading text-4xl md:text-5xl font-bold text-brand-navy mb-6 tracking-tight">
               Six steps to total system restoration.
             </h3>
@@ -991,10 +1053,13 @@ export default function App() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-5 max-w-xl"
             >
-              <h2 className="font-heading text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
-                Why Fixline:<br />
-                A different standard.
+              <h2 className="text-blue-200 font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
+                <span className="w-8 h-px bg-blue-200"></span>
+                Why Fixline
               </h2>
+              <h3 className="font-heading text-4xl md:text-5xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+                A different standard.
+              </h3>
               <p className="text-lg text-blue-100 mb-8 leading-relaxed">
                 Your business deserves more than a temporary patch. We deliver technical stability and honest insights, ensuring your systems are resilient enough to support your growth without the usual shortcuts.
               </p>
@@ -1177,55 +1242,162 @@ export default function App() {
       </motion.section>
 
       {/* CTA Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="py-16 lg:py-24 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl"
-      >
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000')] opacity-10 mix-blend-overlay bg-cover bg-center"></div>
-        
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 relative z-10 text-center">
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
-            Ready to restore your system?
-          </h2>
-          <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Join hundreds of professionals who trust Fixline for enterprise-grade diagnostics, repair, and infrastructure.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
-              onClick={() => setCurrentPage('contact')}
-              className="group bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center"
-            >
-              Start Free Diagnosis
-              <div className="w-0 overflow-hidden opacity-0 group-hover:w-5 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
-                <ArrowRight weight="bold" size={20} className="shrink-0" />
-              </div>
-            </button>
-          </div>
+      <section className="py-20 lg:py-24 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
+        <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-white/5 blur-[150px] rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none"></div>
         </div>
-      </motion.section>
+        <div className="max-w-6xl mx-auto px-8 lg:px-12 relative z-20 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16"
+          >
+            <div className="lg:w-2/3 text-center lg:text-left">
+              <h3 className="font-heading text-3xl md:text-4xl lg:text-[40px] text-white tracking-tight leading-[1.2] sm:leading-[1.15]">
+                <span className="text-blue-100 font-medium block sm:inline mb-1 sm:mb-0 sm:mr-2">Ready to work with a team</span>
+                <span className="font-bold">that takes your device performance seriously?</span>
+              </h3>
+            </div>
+            <div className="lg:w-1/3 flex justify-center lg:justify-end">
+              <button 
+                onClick={() => navigateToPage('contact')}
+                className="bg-white hover:bg-slate-50 text-brand-blue px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
+              >
+                <span className="text-base tracking-wide whitespace-nowrap">Start Free Diagnostics</span>
+                <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
       </>
+      ) : currentPage === 'about' ? (
+        <AboutPage />
       ) : (
         <ContactPage />
       )}
 
       {/* Footer */}
-      <footer className="bg-brand-navy text-slate-400 py-12 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
-            <span className="font-heading font-bold text-2xl tracking-tight text-white">
-              Fix<span className="text-brand-blue">l</span>ine
-            </span>
+      <footer className="bg-brand-navy text-slate-400 pt-16 pb-8 border-t border-white/10">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+            {/* Brand & SEO Description */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-2 cursor-pointer mb-6" onClick={() => navigateToPage('home')}>
+                <span className="font-heading font-bold text-3xl tracking-tight text-white">
+                  Fix<span className="text-brand-blue">l</span>ine
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-400 max-w-sm sm:max-w-md md:max-w-lg md:pr-8">
+                Fixline provides enterprise-grade IT diagnostics, hardware repair, and technical infrastructure solutions. We deliver transparent, secure, and reliable technical support for modern businesses.
+              </p>
+            </div>
+
+            {/* Quick Links Grouping for side-by-side mobile layout */}
+            <div className="lg:col-span-2 col-span-1 md:col-span-1 grid grid-cols-2 gap-8">
+              {/* Solutions */}
+              <div>
+                <h4 className="text-white font-heading font-bold mb-6 text-lg">Solutions</h4>
+                <ul className="space-y-4">
+                  <li>
+                    <a href="#" className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>Services</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>Products</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('contact'); }} className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>Help Center</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Company */}
+              <div>
+                <h4 className="text-white font-heading font-bold mb-6 text-lg">Company</h4>
+                <ul className="space-y-4">
+                  <li>
+                    <a href="#" onClick={(e) => { e.preventDefault(); navigateToPage('about'); }} className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>About Us</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>Partners</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="group flex items-center text-sm hover:text-white transition-colors w-fit">
+                      <span>Resources</span>
+                      <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out text-brand-blue ml-1" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="lg:col-span-1 md:col-span-1">
+              <h4 className="text-white font-heading font-bold mb-6 text-lg">Contact</h4>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start gap-3 text-sm">
+                  <Phone size={18} className="text-brand-blue shrink-0 mt-0.5" />
+                  <a href="tel:+254740493244" className="hover:text-white transition-colors">+254 740493244</a>
+                </li>
+                <li className="flex items-start gap-3 text-sm">
+                  <EnvelopeSimple size={18} className="text-brand-blue shrink-0 mt-0.5" />
+                  <a href="mailto:support@fixline.co.ke" className="hover:text-white transition-colors">support@fixline.co.ke</a>
+                </li>
+                <li className="flex items-start gap-3 text-sm">
+                  <MapPin size={18} className="text-brand-blue shrink-0 mt-0.5" />
+                  <span className="text-slate-400">Apic Centre, Westlands</span>
+                </li>
+              </ul>
+              
+              <div className="flex items-center gap-3">
+                <a href="#" className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue text-slate-400 hover:text-white transition-all">
+                  <XLogo size={18} weight="fill" />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue text-slate-400 hover:text-white transition-all">
+                  <FacebookLogo size={18} weight="fill" />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue text-slate-400 hover:text-white transition-all">
+                  <LinkedinLogo size={18} weight="fill" />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-blue text-slate-400 hover:text-white transition-all">
+                  <InstagramLogo size={18} weight="fill" />
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-8 text-sm">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('contact'); }} className="hover:text-white transition-colors">Contact</a>
-          </div>
-          <div className="text-sm">
-            &copy; {new Date().getFullYear()} Fixline. All rights reserved.
+
+          {/* Divider */}
+          <div className="h-px w-full bg-white/10 mb-8"></div>
+
+          {/* Legals */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+            <div className="flex flex-wrap justify-center md:justify-start gap-6">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+            </div>
+            <div>
+              &copy; {new Date().getFullYear()} Fixline. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>

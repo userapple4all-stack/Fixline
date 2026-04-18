@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import supportImg from './assets/images/support-image.webp';
 import { 
   MapPin, 
   Phone, 
@@ -94,7 +95,7 @@ export default function ContactPage() {
               <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm">
                 Get in Touch
               </span>
-              <h1 className="font-heading text-5xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy">
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-[80px] font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy">
                 We're here to <br className="hidden sm:block" /><span className="text-brand-blue">help.</span>
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed max-w-lg">
@@ -111,7 +112,7 @@ export default function ContactPage() {
               <div className="aspect-[5/4] rounded-2xl overflow-hidden relative">
                 <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply z-10"></div>
                 <img 
-                  src="/images/support-image.webp" 
+                  src={supportImg} 
                   alt="IT support professional on a call" 
                   className="w-full h-full object-cover object-top"
                 />
@@ -171,8 +172,8 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-brand-navy mb-1">Phone</h3>
-                        <p className="text-slate-600">[Phone Number Placeholder]</p>
-                        <p className="text-slate-500 text-sm mt-1">Mon-Fri, 8am - 6pm</p>
+                        <p className="text-slate-600">+254 740493244</p>
+                        <p className="text-slate-500 text-sm mt-1">7am to 7:30pm</p>
                       </div>
                     </div>
 
@@ -182,7 +183,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-brand-navy mb-1">Email</h3>
-                        <p className="text-slate-600">[Email Placeholder]</p>
+                        <a href="mailto:support@fixline.co.ke" className="text-slate-600 hover:text-brand-blue transition-colors">support@fixline.co.ke</a>
                         <p className="text-slate-500 text-sm mt-1">Online support</p>
                       </div>
                     </div>
@@ -355,7 +356,7 @@ export default function ContactPage() {
                     <motion.button 
                       type="submit"
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
                     >
                       Send Message
                       <ArrowRight weight="bold" size={20} />
@@ -369,34 +370,34 @@ export default function ContactPage() {
       </section>
 
       {/* Appraisal CTA Section */}
-      <section className="pb-20 lg:pb-32 px-4 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-7xl mx-auto py-12 lg:py-16 bg-brand-blue relative overflow-hidden rounded-3xl"
-        >
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=2000')] opacity-20 mix-blend-overlay bg-cover bg-center"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-blue/50 to-brand-blue"></div>
-          
-          <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
-              Ready to upgrade your IT experience?
-            </h2>
-            <p className="text-base text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Partner with Fixline for enterprise-grade IT solutions and personalized technical care.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="group bg-white text-brand-blue hover:bg-slate-50 px-6 py-3 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto flex items-center justify-center">
-                Partner With Us
-                <div className="w-0 overflow-hidden opacity-0 group-hover:w-4 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center">
-                  <ArrowRight weight="bold" size={16} className="shrink-0" />
-                </div>
+      <section className="py-20 lg:py-24 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
+        <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-white/5 blur-[150px] rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none"></div>
+        </div>
+        <div className="max-w-6xl mx-auto px-8 lg:px-12 relative z-20 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16"
+          >
+            <div className="lg:w-2/3 text-center lg:text-left">
+              <h3 className="font-heading text-3xl md:text-4xl lg:text-[40px] text-white tracking-tight leading-[1.2] sm:leading-[1.15]">
+                <span className="text-blue-100 font-medium block sm:inline mb-1 sm:mb-0 sm:mr-2">Need dependable</span>
+                <span className="font-bold">technical support?</span>
+              </h3>
+            </div>
+            <div className="lg:w-1/3 flex justify-center lg:justify-end">
+              <button className="bg-white hover:bg-slate-50 text-brand-blue px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto">
+                <span className="text-base tracking-wide whitespace-nowrap">Book a Repair</span>
+                <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
     </div>
   );
