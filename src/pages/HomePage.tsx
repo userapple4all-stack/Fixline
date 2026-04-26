@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
-import customerSupportImg from '../assets/images/customer-support-agent-at-fixline.webp';
-import hardwareRepairImg from '../assets/images/fixline-hardware-repair.webp';
-import consultationImg from '../assets/images/fixline-consultation.webp';
+const customerSupportImg = '/assets/images/customer-support-agent-at-fixline.webp';
+const hardwareRepairImg = '/assets/images/fixline-hardware-repair.webp';
+const consultationImg = '/assets/images/fixline-consultation.webp';
 import { 
   Wrench, 
   Desktop, 

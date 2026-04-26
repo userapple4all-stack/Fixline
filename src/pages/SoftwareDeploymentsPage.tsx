@@ -79,7 +79,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Intro Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <img src="/src/assets/fixline-motif.svg" alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
+        <img src="/assets/fixline-motif.svg" alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
@@ -113,7 +113,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Capabilities Section */}
       <section className="py-10 lg:py-14 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200">
-        <img src="/src/assets/fixline-motif.svg" alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
+        <img src="/assets/fixline-motif.svg" alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-7 flex flex-col justify-center">

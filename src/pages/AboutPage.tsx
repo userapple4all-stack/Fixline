@@ -5,7 +5,7 @@ import { DesktopTower, Headset, Network, Star, ShieldCheck, Handshake, ArrowRigh
 import SectionLabel from '../components/SectionLabel';
 import StatCard from '../components/StatCard';
 import FeatureBox from '../components/FeatureBox';
-import fixlineStudioImage from '../assets/images/fixline studio.svg';
+const fixlineStudioImage = '/assets/images/fixline studio.svg';
 
 const gapSlides = [
   {
@@ -105,7 +105,7 @@ export default function AboutPage() {
 
       {/* The Gap (Auto Scroll) Section */}
       <section className="pt-20 pb-12 lg:pt-28 lg:pb-16 relative bg-white border-t border-slate-200 overflow-hidden">
-        <img src="/src/assets/fixline-motif.svg" alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
+        <img src="/assets/fixline-motif.svg" alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
