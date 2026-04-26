@@ -83,7 +83,7 @@ export default function ProductPage() {
           className="relative z-10 flex-grow flex flex-col justify-center"
         >
           {/* Subtle grid background acting as the "cooking" area */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] rounded-3xl pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.03] rounded-3xl pointer-events-none"></div>
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] rounded-3xl border border-slate-200/50"></div>
           
           <div className="relative backdrop-blur-2xl bg-white/40 border border-white/60 shadow-[0_8px_32px_0_rgba(0,68,255,0.05)] rounded-3xl p-10 md:p-16 lg:p-24 text-center overflow-hidden m-4 md:m-8">

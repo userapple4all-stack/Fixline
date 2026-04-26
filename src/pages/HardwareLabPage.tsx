@@ -28,7 +28,7 @@ export default function HardwareLabPage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-slate-50 border-b border-slate-200">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('/assets/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
           <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
@@ -183,7 +183,7 @@ export default function HardwareLabPage() {
       <section className="py-10 lg:py-14 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl border border-brand-blue/30">
         {/* Subtle background noise/image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1500')] opacity-10 mix-blend-luminosity object-cover hidden lg:block"></div>
         </div>
 
@@ -384,7 +384,7 @@ export default function HardwareLabPage() {
       {/* Appraisal CTA Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
         <div className="absolute inset-0 z-10">
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
           <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-white/5 blur-[150px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none"></div>
         </div>
