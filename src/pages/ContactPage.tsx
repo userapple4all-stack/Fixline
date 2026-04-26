@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import supportImg from './assets/images/support-image.webp';
+import supportImg from '../assets/images/support-image.webp';
+import SectionLabel from '../components/SectionLabel';
 import { 
   MapPin, 
   Phone, 
@@ -92,9 +93,9 @@ export default function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm">
+              <SectionLabel>
                 Get in Touch
-              </span>
+              </SectionLabel>
               <h1 className="font-heading text-5xl md:text-6xl lg:text-[80px] font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy">
                 We're here to <br className="hidden sm:block" /><span className="text-brand-blue">help.</span>
               </h1>
@@ -115,6 +116,7 @@ export default function ContactPage() {
                   src={supportImg} 
                   alt="IT support professional on a call" 
                   className="w-full h-full object-cover object-top"
+                  loading="lazy"
                 />
               </div>
               {/* Floating badge */}

@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { DesktopTower, Headset, Network, Star, ShieldCheck, Handshake, ArrowRight } from '@phosphor-icons/react';
+import SectionLabel from '../components/SectionLabel';
+import StatCard from '../components/StatCard';
+import FeatureBox from '../components/FeatureBox';
+import fixlineStudioImage from '../assets/images/fixline studio.svg';
 
 const gapSlides = [
   {
+    label: "The Problem",
     title: "The Reliability Gap.",
     text: "Technical support is often unpredictable. Devices are handed over without clear diagnostics, temporary fixes create long-term problems, and data privacy is rarely considered.",
-    emphasis: "This uncertainty slows productivity for everyone—from independent creators to growing businesses."
+    emphasis: "This uncertainty stifles productivity for everyone—from independent creators to growing businesses."
   },
   {
+    label: "The Solution",
     title: "The Fixline Standard.",
     text: "Fixline replaces guesswork with transparency. Every diagnostic audit and remote session generates a clear log accessible to the client. Our process ensures that issues are properly identified, repairs are verifiable, and systems return to operation with stability.",
-    emphasis: "Our goal is simple: turn unstable technology into dependable infrastructure."
+    emphasis: "Our focus is consistent: ensuring your technology operates reliably, every time."
   }
 ];
 
@@ -41,9 +48,9 @@ export default function AboutPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="inline-block py-1.5 px-4 rounded-full bg-white border border-slate-200 text-brand-blue font-bold text-xs tracking-widest uppercase mb-6 shadow-sm">
+              <SectionLabel>
                 About Fixline
-              </span>
+              </SectionLabel>
               <h1 className="font-heading text-5xl md:text-6xl lg:text-[80px] font-extrabold leading-[1.05] tracking-tight mb-6 text-brand-navy">
                 Bringing Standards to <span className="text-brand-blue">Technical Support.</span>
               </h1>
@@ -76,60 +83,67 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 pt-10 mt-10"
           >
-            <div className="border-l-2 border-brand-blue pl-4">
-              <div className="text-3xl lg:text-4xl font-extrabold mb-1 text-brand-navy tracking-tight">+5k</div>
-              <div className="text-xs text-slate-600 font-medium">Hardware assets<br/>engineered & restored</div>
-            </div>
-            <div className="border-l-2 border-brand-blue pl-4">
-              <div className="text-3xl lg:text-4xl font-extrabold mb-1 text-brand-navy tracking-tight">+8k</div>
-              <div className="text-xs text-slate-600 font-medium">Secure remote<br/>sessions resolved</div>
-            </div>
-            <div className="border-l-2 border-brand-blue pl-4">
-              <div className="text-3xl lg:text-4xl font-extrabold mb-1 text-brand-navy tracking-tight">+200</div>
-              <div className="text-xs text-slate-600 font-medium leading-relaxed">Managed networks &<br/>fleet infrastructures</div>
-            </div>
-            <div className="border-l-2 border-brand-blue pl-4">
-              <div className="text-3xl lg:text-4xl font-extrabold mb-1 text-brand-navy tracking-tight">+50k</div>
-              <div className="text-xs text-slate-600 font-medium leading-relaxed">Hours of downtime<br/>eliminated for clients</div>
-            </div>
+            <StatCard 
+              number="+5k" 
+              label={<>Hardware assets<br/>engineered & restored</>} 
+            />
+            <StatCard 
+              number="+8k" 
+              label={<>Secure remote<br/>sessions resolved</>} 
+            />
+            <StatCard 
+              number="+200" 
+              label={<>Managed networks &<br/>fleet infrastructures</>} 
+            />
+            <StatCard 
+              number="+50k" 
+              label={<>Hours of downtime<br/>eliminated for clients</>} 
+            />
           </motion.div>
         </div>
       </section>
 
       {/* The Gap (Auto Scroll) Section */}
-      <section className="py-16 lg:py-24 relative bg-white overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="pt-20 pb-12 lg:pt-28 lg:pb-16 relative bg-white border-t border-slate-200 overflow-hidden">
+        <img src="/src/assets/fixline-motif.svg" alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col items-center"
+            className="flex flex-col"
           >
-            
             {/* Auto Scrolling Content */}
-            <div className="relative w-full h-[320px] sm:h-[240px] md:h-[200px] lg:h-[180px] flex items-center justify-center">
+            <div className="relative w-full min-h-[450px] sm:min-h-[350px] lg:min-h-[250px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeSlide}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 flex flex-col items-center justify-center"
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute inset-0 grid lg:grid-cols-2 gap-8 lg:gap-16 items-start"
                 >
-                  <h3 className="font-heading text-3xl md:text-4xl font-bold text-brand-navy leading-[1.15] tracking-tight mb-4 mx-auto max-w-3xl">
-                    {gapSlides[activeSlide].title}
-                  </h3>
-                  <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto font-light px-4">
-                    {gapSlides[activeSlide].text} <span className="italic font-medium text-slate-800">{gapSlides[activeSlide].emphasis}</span>
-                  </p>
+                  <div className="flex flex-col items-start text-left">
+                    <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
+                       <span className="w-8 h-[2px] bg-brand-blue"></span>
+                       {gapSlides[activeSlide].label}
+                    </h2>
+                    <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand-navy leading-[1.15] tracking-tight">
+                      {gapSlides[activeSlide].title}
+                    </h3>
+                  </div>
+                  <div className="text-base sm:text-lg text-slate-600 leading-relaxed font-light text-left mt-2 lg:mt-0">
+                    <p className="mb-4">{gapSlides[activeSlide].text}</p>
+                    <p className="text-sm sm:text-base font-medium text-slate-800 border-t border-slate-200 pt-4">{gapSlides[activeSlide].emphasis}</p>
+                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
             
             {/* Dots Indicator */}
-            <div className="flex gap-2 mt-6">
+            <div className="flex justify-center gap-2 mt-4 lg:mt-8 w-full">
               {gapSlides.map((_, idx) => (
                 <button 
                   key={idx}
@@ -141,59 +155,49 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </div>
+      </section>
         
-        {/* Centered Box layout for Core Capabilities */}
-        <div className="max-w-6xl mx-auto px-6 mt-16 lg:mt-24 mb-12">
+      {/* Core Capabilities Section */}
+      <section className="py-12 lg:py-16 bg-white relative overflow-hidden m-4 lg:m-6 rounded-2xl border border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          
+          <div className="mb-12">
+            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
+              <span className="w-8 h-[2px] bg-brand-blue"></span>
+              Core Capabilities
+            </h2>
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-brand-navy tracking-tight mb-4">
+               Built for reliable performance
+            </h2>
+          </div>
+
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden"
           >
-            {/* Top Bar */}
-            <div className="py-6 text-center border-b border-slate-100 bg-slate-50/50">
-              <h4 className="font-heading font-bold text-lg text-brand-navy">Our core capabilities</h4>
-            </div>
-            
             {/* 3-Column Grid */}
-            <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              {/* Column 1 */}
-              <div className="px-8 py-10 lg:p-12 flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center mb-5 text-brand-blue">
-                  <DesktopTower size={28} weight="duotone" />
-                </div>
-                <h5 className="font-bold text-lg text-brand-navy mb-3">Hardware Diagnostics & Repair</h5>
-                <p className="text-sm text-slate-600 leading-relaxed font-light">
-                  From component-level motherboard repairs to workstation builds, our lab ensures every device is restored to verified performance standards.
-                </p>
-              </div>
-              
-              {/* Column 2 */}
-              <div className="px-8 py-10 lg:p-12 flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center mb-5 text-brand-blue">
-                  <Headset size={28} weight="duotone" />
-                </div>
-                <h5 className="font-bold text-lg text-brand-navy mb-3">Secure Remote Support</h5>
-                <p className="text-sm text-slate-600 leading-relaxed font-light">
-                  Through encrypted remote sessions, we diagnose and resolve operating system issues, software failures, and system configuration problems without compromising security.
-                </p>
-              </div>
-              
-              {/* Column 3 */}
-              <div className="px-8 py-10 lg:p-12 flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center mb-5">
-                  <Network size={28} weight="duotone" />
-                </div>
-                <h5 className="font-bold text-lg text-brand-navy mb-3">Infrastructure & Networks</h5>
-                <p className="text-sm text-slate-600 leading-relaxed font-light">
-                  We design and deploy stable network environments—from secure office Wi-Fi systems to scalable IT infrastructure for growing teams.
-                </p>
-              </div>
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 border-t border-slate-100 pt-8 lg:pt-12">
+              <FeatureBox 
+                icon={<DesktopTower size={28} weight="duotone" />}
+                title="We Treat Hardware as Infrastructure"
+                description="Devices are not disposable tools; they are part of a larger system. We approach every repair, deployment, and configuration as part of an environment that must remain stable, secure, and maintainable over time."
+              />
+              <FeatureBox 
+                icon={<Headset size={28} weight="duotone" />}
+                title="We Standardize What Others Improvise"
+                description="Where technical support is often inconsistent, we apply structured processes. Every repair, deployment, and audit follows a defined method to ensure consistent outcomes regardless of scale."
+              />
+              <FeatureBox 
+                icon={<Network size={28} weight="duotone" />}
+                title="We Design for Continuity"
+                description="Our work is measured over time. Systems should continue to perform under real conditions, not just immediately after service. We build and maintain environments that support uninterrupted work."
+              />
             </div>
 
             {/* Bottom Bar */}
-            <div className="py-6 px-6 lg:px-12 text-center border-t border-slate-100 bg-slate-50/50">
+            <div className="mt-12 py-6 px-6 lg:px-12 text-center bg-slate-50/50 border border-slate-100">
               <p className="text-slate-600 font-medium max-w-2xl mx-auto text-sm">
                 By making infrastructure stable and high-performing, we empower industries to solve real-world challenges at scale.
               </p>
@@ -203,38 +207,38 @@ export default function AboutPage() {
       </section>
 
       {/* Our Mission & Trust Section */}
-      <section className="py-20 lg:py-28 relative bg-slate-50 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 text-center mb-16">
+      <section className="pt-20 pb-12 lg:pt-28 lg:pb-16 relative bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12 lg:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col items-center"
+            className="flex flex-col items-start"
           >
-            <div className="flex items-center justify-center gap-3 mb-6">
+            <h2 className="text-brand-blue font-bold tracking-widest uppercase text-xs mb-4 flex items-center gap-2">
               <span className="w-8 h-[2px] bg-brand-blue"></span>
-              <span className="text-brand-blue font-bold tracking-widest uppercase text-xs">Our Mission</span>
-            </div>
-            <h3 className="font-heading text-3xl lg:text-4xl font-bold text-brand-navy leading-[1.15] tracking-tight mx-auto max-w-3xl">
-              To establish dependable technical standards for computer systems, infrastructure, and support required for total uptime.
+              Our Mission
+            </h2>
+            <h3 className="font-heading text-3xl md:text-4xl text-brand-navy font-bold max-w-2xl">
+              Establish dependable technical standards that keep systems and infrastructure reliably operational.
             </h3>
           </motion.div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           {/* the BIG "Who We Are" Image + Stats Box */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mb-16 lg:mb-24"
+            className="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-0"
           >
             {/* Large Team Image */}
             <div className="h-[300px] md:h-[400px] lg:h-[500px] w-full relative">
               <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000" 
+                src={fixlineStudioImage} 
                 alt="Fixline Team" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
@@ -243,7 +247,7 @@ export default function AboutPage() {
 
             {/* 3-Column Image Stats Footer */}
             <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-white">
-              <div className="p-8 lg:p-10 flex flex-col items-center text-center">
+              <div className="p-8 lg:p-10 flex flex-col items-start text-left">
                 <div className="w-12 h-12 rounded-full bg-blue-50 text-brand-blue flex items-center justify-center mb-5">
                   <Star fill="currentColor" size={24} />
                 </div>
@@ -252,7 +256,7 @@ export default function AboutPage() {
                   Engineered to international technical standards, providing enterprise-grade reliability for individual hardware and office networks.
                 </p>
               </div>
-              <div className="p-8 lg:p-10 flex flex-col items-center text-center">
+              <div className="p-8 lg:p-10 flex flex-col items-start text-left">
                 <div className="w-12 h-12 rounded-full bg-blue-50 text-brand-blue flex items-center justify-center mb-5">
                   <ShieldCheck fill="currentColor" size={24} />
                 </div>
@@ -261,7 +265,7 @@ export default function AboutPage() {
                   The technical partner for Nairobi’s leading creative studios, independent professionals, and enterprise fleets.
                 </p>
               </div>
-              <div className="p-8 lg:p-10 flex flex-col items-center text-center">
+              <div className="p-8 lg:p-10 flex flex-col items-start text-left">
                 <div className="w-12 h-12 rounded-full bg-blue-50 text-brand-blue flex items-center justify-center mb-5">
                   <Handshake fill="currentColor" size={24} />
                 </div>
@@ -272,69 +276,73 @@ export default function AboutPage() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* Our Values Box */}
+      {/* Our Values Section */}
+      <section className="py-12 md:py-16 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center border border-brand-blue">
+        {/* Background Image overlay */}
+        <div className="absolute inset-0 z-0 mix-blend-overlay opacity-20">
+          <img 
+            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000" 
+            alt="Technology background" 
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        
+        {/* Subtle background glow for the whole box */}
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] bg-white/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-20 w-full flex flex-col lg:flex-row items-center justify-between gap-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-brand-blue rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row relative"
+            className="flex flex-col lg:flex-row w-full relative"
           >
-            {/* Background Image overlay */}
-            <div className="absolute inset-0 z-0 mix-blend-overlay opacity-20">
-              <img 
-                src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000" 
-                alt="Technology background" 
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            
-            {/* Subtle background glow for the whole box */}
-            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] bg-white/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-            
             {/* Left side Large Heading */}
-            <div className="p-10 lg:p-16 lg:w-[45%] flex items-center lg:items-start relative z-10">
+            <div className="lg:py-8 lg:w-[45%] flex items-center lg:items-start relative z-10">
               <h3 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight lg:sticky lg:top-32">
                 Our Values
               </h3>
             </div>
             
             {/* Right side Stacked List */}
-            <div className="p-8 lg:p-12 lg:pr-16 lg:w-[55%] relative z-10">
+            <div className="lg:w-[55%] relative z-10 pt-8 lg:pt-0">
               <div className="flex flex-col divide-y divide-white/10">
                 {[
                   {
-                    prefix: "We are",
-                    title: "Transparent",
-                    desc: "We provide real-time visibility into every diagnostic and repair. Through Fixline OS, you own the technical data and the process history of every asset."
+                    title: "We Value Clarity",
+                    desc: "Technical work should be understood, not obscured. We communicate issues, decisions, and outcomes in a way that allows clients to make informed choices about their systems."
                   },
                   {
-                    prefix: "We are",
-                    title: "Secure",
-                    desc: "Privacy is a baseline protocol. From our zero-retention remote access keys to our secure lab data-handling, your information never leaves your control."
+                    title: "We Prioritize Reliability",
+                    desc: "A system that works once is not enough. We focus on outcomes that hold over time, ensuring that our work supports consistent performance under real conditions."
                   },
                   {
-                    prefix: "We are",
-                    title: "Accountable",
-                    desc: "We don't hide behind jargon or temporary fixes. We provide verifiable results for every motherboard repair, network audit, and software rollout."
+                    title: "We are Responsible",
+                    desc: "Access to systems and data comes with responsibility. We handle every device and environment with the same level of care we would expect for our own."
                   },
                   {
-                    prefix: "We are",
-                    title: "Scalable",
-                    desc: "We build technical infrastructure that grows with you. Whether it’s a single workstation for a creator or a multi-site network for a firm, our standards remain absolute."
+                    title: "We Value Long-Term Thinking",
+                    desc: "Short-term fixes often create long-term problems. We make decisions that reduce future risk, even when it requires more effort upfront."
+                  },
+                  {
+                    title: "We Maintain Professional Discipline",
+                    desc: "Technical work requires structure and consistency. We follow defined processes not out of rigidity, but to ensure dependable and repeatable outcomes."
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="py-6 lg:py-7 first:pt-0 last:pb-0 flex items-start gap-4">
+                  <div key={idx} className="py-4 lg:py-5 first:pt-0 last:pb-0 flex items-start gap-4">
                     {/* Minimal inset bullet */}
                     <div className="mt-1 flex-shrink-0 flex items-center justify-center w-3.5 h-3.5 rounded-full border border-white/40">
                       <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
                     </div>
                     
                     <div>
-                      <h4 className="text-base text-blue-50 mb-1.5 leading-tight font-medium">
-                        {item.prefix} <span className="font-bold text-white">{item.title}</span>
+                      <h4 className="text-base text-white mb-1.5 leading-tight font-bold">
+                        {item.title}
                       </h4>
                       <p className="text-blue-100 text-sm leading-relaxed max-w-md font-light">{item.desc}</p>
                     </div>
@@ -353,7 +361,7 @@ export default function AboutPage() {
           <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-brand-blue/5 blur-[150px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-100/30 blur-[150px] rounded-full pointer-events-none"></div>
         </div>
-        <div className="max-w-6xl mx-auto px-8 lg:px-12 relative z-20 w-full">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-20 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -367,6 +375,7 @@ export default function AboutPage() {
                 <span className="font-bold">eliminate technical friction to secure your uptime.</span>
               </h3>
             </div>
+            
             <div className="lg:w-1/3 flex justify-center lg:justify-end">
               <button className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto">
                 <span className="text-base tracking-wide whitespace-nowrap">Consult an engineer</span>
