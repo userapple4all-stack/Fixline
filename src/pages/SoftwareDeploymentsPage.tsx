@@ -23,7 +23,7 @@ export default function SoftwareDeploymentsPage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-slate-50 border-b border-slate-200">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-full h-full bg-[url('/assets/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('/images/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
           <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
@@ -66,7 +66,7 @@ export default function SoftwareDeploymentsPage() {
               <div className="aspect-[4/3] rounded-2xl overflow-hidden relative">
                 <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply z-10"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800"
+                  src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=60&w=800"
                   alt="Software Deployment Services" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -79,7 +79,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Intro Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <img src="/assets/fixline-motif.svg" alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
+        <img src="/images/fixline-motif.svg" alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
@@ -113,7 +113,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Capabilities Section */}
       <section className="py-10 lg:py-14 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200">
-        <img src="/assets/fixline-motif.svg" alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
+        <img src="/images/fixline-motif.svg" alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-7 flex flex-col justify-center">
@@ -175,8 +175,8 @@ export default function SoftwareDeploymentsPage() {
       {/* How It Works Section */}
       <section className="py-10 lg:py-14 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl border border-brand-blue/30">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1500')] opacity-10 mix-blend-luminosity object-cover hidden lg:block"></div>
+          <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1000')] opacity-10 mix-blend-luminosity object-cover hidden lg:block"></div>
         </div>
 
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
@@ -366,7 +366,7 @@ export default function SoftwareDeploymentsPage() {
       {/* Appraisal CTA Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
         <div className="absolute inset-0 z-10">
-          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
           <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-white/5 blur-[150px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none"></div>
         </div>

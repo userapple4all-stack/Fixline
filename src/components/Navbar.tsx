@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
-            <img src="/assets/fixline-logo.svg" alt="Fixline" className="h-6 md:h-8 w-auto" />
+            <img src="/images/fixline-logo.svg" alt="Fixline" className="h-6 md:h-8 w-auto" />
           </Link>
           <div className="hidden lg:flex items-center gap-8">
             {/* Services Dropdown */}

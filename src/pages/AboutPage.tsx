@@ -5,7 +5,7 @@ import { DesktopTower, Headset, Network, Star, ShieldCheck, Handshake, ArrowRigh
 import SectionLabel from '../components/SectionLabel';
 import StatCard from '../components/StatCard';
 import FeatureBox from '../components/FeatureBox';
-const fixlineStudioImage = '/assets/images/fixline-studio.svg';
+const fixlineStudioImage = '/images/fixline-studio.svg';
 
 const gapSlides = [
   {
@@ -37,7 +37,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-slate-50 border-b border-slate-200">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-full h-full bg-[url('/assets/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('/images/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
           <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
@@ -67,7 +67,7 @@ export default function AboutPage() {
             >
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-slate-200 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=1000" 
+                  src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=60&w=1000" 
                   alt="IT Professionals working" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -105,7 +105,7 @@ export default function AboutPage() {
 
       {/* The Gap (Auto Scroll) Section */}
       <section className="pt-20 pb-12 lg:pt-28 lg:pb-16 relative bg-white border-t border-slate-200 overflow-hidden">
-        <img src="/assets/fixline-motif.svg" alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
+        <img src="/images/fixline-motif.svg" alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -284,7 +284,7 @@ export default function AboutPage() {
         {/* Background Image overlay */}
         <div className="absolute inset-0 z-0 mix-blend-overlay opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000" 
+            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1200" 
             alt="Technology background" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
@@ -357,7 +357,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 lg:py-24 bg-slate-50 relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
         <div className="absolute inset-0 z-10">
-          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.02] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.02] mix-blend-overlay"></div>
           <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-brand-blue/5 blur-[150px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-100/30 blur-[150px] rounded-full pointer-events-none"></div>
         </div>

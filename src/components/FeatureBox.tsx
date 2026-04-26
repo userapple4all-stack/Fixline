@@ -9,7 +9,7 @@ interface FeatureBoxProps {
 export default function FeatureBox({ icon, title, description }: FeatureBoxProps) {
   return (
     <div className="px-8 py-10 lg:p-12 flex flex-col items-center text-center relative overflow-hidden">
-      <img src="/assets/fixline-motif.svg" alt="" className="absolute -bottom-8 -left-8 w-24 h-24 opacity-[0.03] pointer-events-none" />
+      <img src="/images/fixline-motif.svg" alt="" className="absolute -bottom-8 -left-8 w-24 h-24 opacity-[0.03] pointer-events-none" />
       <div className="w-14 h-14 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center mb-5 relative z-10">
         {icon}
       </div>
