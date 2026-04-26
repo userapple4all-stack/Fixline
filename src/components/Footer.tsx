@@ -20,7 +20,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <img
-                src="/assets/fixline logo2.svg"
+                src="/assets/fixline-logo2.svg"
                 alt="Fixline"
                 className="h-6 md:h-8 w-auto"
               />
@@ -205,7 +205,7 @@ export default function Footer() {
               WebkitMaskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)' 
             }}
           >
-            <img src="/assets/fixline -foot.svg" alt="" className="w-full h-auto pointer-events-none" />
+            <img src="/assets/fixline-foot.svg" alt="" className="w-full h-auto pointer-events-none" />
           </div>
           <div className="h-px w-full bg-white/10 relative z-10 pointer-events-auto"></div>
         </div>

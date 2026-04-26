@@ -5,7 +5,7 @@ import { DesktopTower, Headset, Network, Star, ShieldCheck, Handshake, ArrowRigh
 import SectionLabel from '../components/SectionLabel';
 import StatCard from '../components/StatCard';
 import FeatureBox from '../components/FeatureBox';
-const fixlineStudioImage = '/assets/images/fixline studio.svg';
+const fixlineStudioImage = '/assets/images/fixline-studio.svg';
 
 const gapSlides = [
   {
