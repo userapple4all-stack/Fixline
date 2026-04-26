@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
 const customerSupportImg = '/images/customer-support-agent-at-fixline.webp';
 const hardwareRepairImg = '/images/fixline-hardware-repair.webp';
-const consultationImg = '/images/images/fixline-consultation.webp';
+const consultationImg = '/images/fixline-consultation.webp';
 import { 
   Wrench, 
   Desktop, 
