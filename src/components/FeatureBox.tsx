@@ -1,5 +1,5 @@
 import React from 'react';
-import fixlineMotif from '/assets/fixline-motif.svg';
+const fixlineMotif = '/assets/fixline-motif.svg';
 
 interface FeatureBoxProps {
   icon: React.ReactNode;

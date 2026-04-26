@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import fixlineMotif from '/assets/fixline-motif.svg';
+const fixlineMotif = '/assets/fixline-motif.svg';
 import { 
   ArrowRight, 
   CheckCircle, 

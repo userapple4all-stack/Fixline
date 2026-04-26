@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import customerSupportImg from '/assets/images/customer-support-agent-at-fixline.webp';
+const customerSupportImg = '/assets/images/customer-support-agent-at-fixline.webp';
 const fixlineMotif = '/assets/fixline-motif.svg';
 import { 
   ArrowRight, 

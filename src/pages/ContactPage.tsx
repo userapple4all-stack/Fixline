@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import supportImg from '/assets/images/support-image.webp';
+const supportImg = '/assets/images/support-image.webp';
 import SectionLabel from '../components/SectionLabel';
 import { 
   MapPin, 
