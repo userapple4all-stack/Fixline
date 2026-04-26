@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-const fixlineLogo = '/assets/fixline-logo.svg';
+import fixlineLogo from '/assets/fixline-logo.svg';
 import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CaretDown, Desktop, Wrench, HardDrives, TerminalWindow, ArrowRight, DesktopTower, Network, Lifebuoy, FileText, Certificate, List, X, Phone, Newspaper } from '@phosphor-icons/react';

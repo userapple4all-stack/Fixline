@@ -1,5 +1,5 @@
 import React from "react";
-const fixlineLogo2 = '/assets/fixline-logo2.svg';
+import fixlineLogo2 from '/assets/fixline-logo2.svg';
 const fixlineFoot = '/assets/fixline-foot.svg';
 import { Link } from "react-router-dom";
 import {
