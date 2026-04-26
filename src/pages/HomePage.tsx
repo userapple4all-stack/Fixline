@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
-const customerSupportImg = '/images/customer-support-agent-at-fixline.webp';
-const hardwareRepairImg = '/images/fixline-hardware-repair.webp';
-const consultationImg = '/images/fixline-consultation.webp';
+const fixlineMotif = '/assets/fixline-motif.svg';
+const customerSupportImg = '/assets/images/customer-support-agent-at-fixline.webp';
+const hardwareRepairImg = '/assets/images/fixline-hardware-repair.webp';
+const consultationImg = '/assets/images/fixline-consultation.webp';
 import { 
   Wrench, 
   Desktop, 
@@ -153,7 +154,7 @@ export default function HomePage() {
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden bg-slate-50">
         {/* Bright, inviting background elements */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-full h-full bg-[url('/images/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('/assets/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
           <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/10 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
@@ -533,7 +534,7 @@ export default function HomePage() {
                           transition={{ duration: 0.5, ease: "easeOut" }}
                           className="bg-white border-2 rounded-3xl p-6 lg:p-8 flex-1 flex flex-col justify-center min-h-[260px] lg:min-h-[320px] relative overflow-hidden group/card"
                         >
-                          <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-12 -mt-12 transition-transform duration-500 group-hover/card:scale-110 lg:hidden"></div>
+                          <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.03] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none" />
                           <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-bold mb-4 flex-shrink-0 lg:hidden text-lg relative z-10 transition-colors duration-500 group-hover/card:bg-brand-blue group-hover/card:text-white group-hover/card:border-brand-blue">
                             {step.num}
                           </div>
@@ -586,7 +587,7 @@ export default function HomePage() {
                         transition={{ duration: 0.5, ease: "easeOut" }}
                         className="bg-brand-blue border-2 border-brand-blue rounded-3xl p-6 lg:p-10 flex-1 flex flex-col justify-center items-center text-center min-h-[260px] lg:min-h-[320px] relative overflow-hidden group/card"
                       >
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-bl-full -mr-12 -mt-12 transition-transform duration-500 group-hover/card:scale-110 lg:hidden"></div>
+                        <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.05] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none" />
                         <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold mb-4 flex-shrink-0 lg:hidden text-lg relative z-10 transition-colors duration-500 group-hover/card:bg-white group-hover/card:text-brand-blue group-hover/card:border-white">
                           <ArrowRight size={20} weight="bold" />
                         </div>
@@ -783,7 +784,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <Network size={28} weight="duotone" />
               </div>
@@ -799,7 +800,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <DesktopTower size={28} weight="duotone" />
               </div>
@@ -815,7 +816,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <TerminalWindow size={28} weight="duotone" />
               </div>
@@ -831,7 +832,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 rounded-bl-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-110"></div>
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <Wrench size={28} weight="duotone" />
               </div>
@@ -848,7 +849,7 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="py-20 lg:py-24 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-2xl flex items-center">
         <div className="absolute inset-0 z-10">
-          <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
           <div className="absolute top-0 right-[-10%] w-[800px] h-[800px] bg-white/5 blur-[150px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-300/20 blur-[150px] rounded-full pointer-events-none"></div>
         </div>

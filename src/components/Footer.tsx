@@ -1,4 +1,6 @@
 import React from "react";
+const fixlineLogo2 = '/assets/fixline-logo2.svg';
+const fixlineFoot = '/assets/fixline-foot.svg';
 import { Link } from "react-router-dom";
 import {
   Phone,
@@ -20,7 +22,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <img
-                src="/images/fixline-logo2.svg"
+                src={fixlineLogo2}
                 alt="Fixline"
                 className="h-6 md:h-8 w-auto"
               />
@@ -205,7 +207,7 @@ export default function Footer() {
               WebkitMaskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)' 
             }}
           >
-            <img src="/images/fixline-foot.svg" alt="" className="w-full h-auto pointer-events-none" />
+            <img src={fixlineFoot} alt="" className="w-full h-auto pointer-events-none" />
           </div>
           <div className="h-px w-full bg-white/10 relative z-10 pointer-events-auto"></div>
         </div>
