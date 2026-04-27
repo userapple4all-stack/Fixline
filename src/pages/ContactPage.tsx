@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-const supportImg = '/assets/images/support-image.webp';
+import supportImg from '/assets/images/customer-support-agent-at-fixline.svg';
 import SectionLabel from '../components/SectionLabel';
 import { 
   MapPin, 
@@ -110,12 +110,12 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <div className="aspect-[5/4] rounded-2xl overflow-hidden relative">
+              <div className="aspect-video rounded-2xl overflow-hidden relative">
                 <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply z-10"></div>
                 <img 
                   src={supportImg} 
                   alt="IT support professional on a call" 
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-contain object-center"
                   loading="lazy"
                 />
               </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-const fixlineMotif = '/assets/fixline-motif.svg';
+import fixlineMotif from '/assets/fixline-motif.svg';
 import { Network, DesktopTower, TerminalWindow, Wrench, PhoneCall, EnvelopeSimple } from '@phosphor-icons/react';
 
 const productData: Record<string, any> = {

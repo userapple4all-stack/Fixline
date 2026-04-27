@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-const fixlineMotif = '/assets/fixline-motif.svg';
+import fixlineMotif from '/assets/fixline-motif.svg';
 import { EnvelopeSimple, PhoneCall, CurrencyCircleDollar } from '@phosphor-icons/react';
 
 export default function PricingPage() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-const hardwareRepairImg = '/assets/images/fixline-hardware-repair.webp';
+import hardwareRepairImg from '/assets/images/fixline-hardware-repair.svg';
 const fixlineMotif = '/assets/fixline-motif.svg';
 import { 
   ArrowRight, 

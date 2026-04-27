@@ -3,9 +3,9 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
 const fixlineMotif = '/assets/fixline-motif.svg';
-const customerSupportImg = '/assets/images/customer-support-agent-at-fixline.webp';
-const hardwareRepairImg = '/assets/images/fixline-hardware-repair.webp';
-const consultationImg = '/assets/images/fixline-consultation.webp';
+const customerSupportImg = '/assets/images/support-image.svg';
+const hardwareRepairImg = '/assets/images/fixline-hardware-repair.svg';
+const consultationImg = '/assets/images/fixline-consultation.svg';
 import { 
   Wrench, 
   Desktop, 
