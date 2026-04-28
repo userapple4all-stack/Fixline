@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Buildings, Wrench, DesktopTower, Link, SealCheck, ArrowsOutLineHorizontal } from '@phosphor-icons/react';
+import { ArrowRight, Buildings, Wrench, DesktopTower, Link as LinkIcon, SealCheck, ArrowsOutLineHorizontal } from '@phosphor-icons/react';
+import { Link } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
 import StatCard from '../components/StatCard';
 import FeatureBox from '../components/FeatureBox';
@@ -209,10 +210,10 @@ export default function PartnersPage() {
           <h3 className="font-heading text-3xl md:text-4xl text-white font-bold tracking-tight text-center lg:text-left lg:max-w-2xl">
             Secure reliable technical support for your operations.
           </h3>
-          <button className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full lg:w-auto">
+          <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full lg:w-auto">
             <span className="text-sm tracking-wide whitespace-nowrap">Request a Partnership Consultation</span>
             <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </section>
     </div>

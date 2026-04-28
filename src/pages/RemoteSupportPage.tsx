@@ -17,6 +17,7 @@ import {
   TrendUp,
   IdentificationCard
 } from '@phosphor-icons/react';
+import ScheduleCallButton from '../components/ScheduleCallButton';
 import SectionLabel from '../components/SectionLabel';
 import FeatureBox from '../components/FeatureBox';
 
@@ -59,8 +60,8 @@ export default function RemoteSupportPage() {
                   data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
                 >
-                  <span className="sm:hidden">Call</span>
-                  <span className="hidden sm:inline">Schedule Call</span>
+                  <span className="sm:hidden">Consult</span>
+                  <span className="hidden sm:inline">Speak to an Expert</span>
                 </button>
               </div>
             </motion.div>
@@ -173,8 +174,8 @@ export default function RemoteSupportPage() {
                 </p>
                 <div className="flex flex-col gap-4">
                   <button 
-                    data-cal-link="fixline-systems-mgiaor/15min"
-                    data-cal-namespace="15min"
+                    data-cal-link="fixline-systems-mgiaor/support"
+                    data-cal-namespace="support"
                     data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                     className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group"
                   >
@@ -182,7 +183,8 @@ export default function RemoteSupportPage() {
                     <span className="border-b-2 border-brand-blue/30 group-hover:border-brand-blue transition-colors pb-0.5">Start Remote Diagnosis</span>
                   </button>
 
-                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+{/* Remove call me button */}
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 hidden">
                     <p className="text-sm font-semibold text-brand-navy mb-2">Prefer a call?</p>
                     <div className="flex gap-2">
                       <input type="tel" placeholder="Your phone number" className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue outline-none" />
@@ -420,16 +422,9 @@ export default function RemoteSupportPage() {
             </div>
             <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0 gap-3">
               <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Support</span>
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Book a Remote Support Session</span>
+                <CalendarPlus size={20} weight="bold" className="shrink-0 transition-transform group-hover:scale-110" />
               </Link>
-              <button 
-                data-cal-link="fixline-systems-mgiaor/support"
-                data-cal-namespace="support"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all flex flex-row items-center justify-center gap-2 group w-full sm:w-auto"
-              >
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule Call</span>
-              </button>
             </div>
           </motion.div>
         </div>

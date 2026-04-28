@@ -284,17 +284,12 @@ export default function Navbar() {
             </div>
             
             
-            <Link to="/support" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors py-2 px-3 lg:px-4">
-              Support
+            <Link to="/support" className="group flex items-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm shadow-brand-blue/20">
+              Start Repair
+              <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
+                <ArrowRight size={16} weight="bold" />
+              </span>
             </Link>
-            <button 
-              data-cal-link="fixline-systems-mgiaor/support"
-              data-cal-namespace="support"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-              className="group flex items-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm shadow-brand-blue/20"
-            >
-              Schedule Call
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -404,23 +399,15 @@ export default function Navbar() {
               )}
             </div>
 
-            <div className="flex gap-3 mt-6">
-              <button 
-                onClick={() => handleMobileMenuClick('/support')}
-                className="flex-1 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-brand-navy px-5 py-3 rounded-full text-sm font-bold shadow-sm transition-all"
-              >
-                Support
-              </button>
-              <button 
-                data-cal-link="fixline-systems-mgiaor/support"
-                data-cal-namespace="support"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex-1 flex items-center justify-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-sm font-bold shadow-sm shadow-brand-blue/20 transition-all"
-              >
-                Schedule Call
-              </button>
-            </div>
+            <button 
+              onClick={() => handleMobileMenuClick('/support')}
+              className="group flex items-center justify-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-sm font-bold w-full mt-6 shadow-sm shadow-brand-blue/20 transition-all"
+            >
+              Start Repair
+              <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
+                <ArrowRight size={16} weight="bold" />
+              </span>
+            </button>
           </div>
         </motion.div>
       )}

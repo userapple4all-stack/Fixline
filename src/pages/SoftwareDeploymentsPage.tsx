@@ -16,6 +16,7 @@ import {
   TrendUp,
   IdentificationCard
 } from '@phosphor-icons/react';
+import ScheduleCallButton from '../components/ScheduleCallButton';
 import SectionLabel from '../components/SectionLabel';
 
 export default function SoftwareDeploymentsPage() {
@@ -46,9 +47,9 @@ export default function SoftwareDeploymentsPage() {
               </p>
               
               <div className="flex flex-row gap-3 sm:gap-4">
-                <Link to="/support" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
-                  <span className="sm:hidden">Support</span>
-                  <span className="hidden sm:inline">Go to Support</span>
+                <Link to="/contact" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
+                  <span className="sm:hidden">Plan Now</span>
+                  <span className="hidden sm:inline">Plan a Rollout</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <button 
@@ -57,8 +58,8 @@ export default function SoftwareDeploymentsPage() {
                   data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
                 >
-                  <span className="sm:hidden">Call</span>
-                  <span className="hidden sm:inline">Schedule Call</span>
+                  <span className="sm:hidden">Consult</span>
+                  <span className="hidden sm:inline">Speak to an Expert</span>
                 </button>
               </div>
             </motion.div>
@@ -168,10 +169,10 @@ export default function SoftwareDeploymentsPage() {
                   We specialize in the deployment of high-stakes production environments. From high-compute creative suites to complex enterprise platforms, we ensure your software is securely integrated and tuned to your hardware to provide a stable floor for your operations.
                 </p>
                 <div className="flex">
-                  <Link to="/contact" className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group">
+                  <ScheduleCallButton className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group">
                     <CalendarPlus size={28} weight="regular" className="group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
-                    <span className="border-b-2 border-brand-blue/30 group-hover:border-brand-blue transition-colors pb-0.5">Request a Software update.</span>
-                  </Link>
+                    <span className="border-b-2 border-brand-blue/30 group-hover:border-brand-blue transition-colors pb-0.5">Request software</span>
+                  </ScheduleCallButton>
                 </div>
               </div>
             </div>
@@ -391,16 +392,14 @@ export default function SoftwareDeploymentsPage() {
               </h3>
             </div>
             <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0 gap-3">
-              <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Support</span>
-              </Link>
               <button 
                 data-cal-link="fixline-systems-mgiaor/support"
                 data-cal-namespace="support"
                 data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all flex flex-row items-center justify-center gap-2 group w-full sm:w-auto"
+                className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto"
               >
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule Call</span>
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule A Rollout</span>
+                <CalendarPlus size={20} weight="bold" className="shrink-0 transition-transform group-hover:scale-110" />
               </button>
             </div>
           </motion.div>

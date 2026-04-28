@@ -11,6 +11,7 @@ import {
   ArrowRight,
   CheckCircle
 } from '@phosphor-icons/react';
+import ScheduleCallButton from '../components/ScheduleCallButton';
 
 export default function ContactPage() {
   const [clientType, setClientType] = useState<'individual' | 'business'>('individual');
@@ -241,15 +242,12 @@ export default function ContactPage() {
                   <p className="text-sm text-slate-600 mb-4">
                     Need immediate assistance or want to discuss a project? Schedule a brief call with our technical team.
                   </p>
-                  <button 
-                    data-cal-link="fixline-systems-mgiaor/15min"
-                    data-cal-namespace="15min"
-                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  <ScheduleCallButton 
                     className="bg-white border border-slate-200 hover:border-brand-blue text-brand-navy hover:text-brand-blue px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-fit"
                   >
                     <Phone weight="bold" size={16} />
                     Schedule Call
-                  </button>
+                  </ScheduleCallButton>
                 </div>
               </div>
             </motion.div>

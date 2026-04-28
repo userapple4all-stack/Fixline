@@ -86,8 +86,8 @@ export default function PricingPage() {
                   </Link>
                   
                   <button 
-                    data-cal-link="fixline-systems-mgiaor/15min"
-                    data-cal-namespace="15min"
+                    data-cal-link="fixline-systems-mgiaor/support"
+                    data-cal-namespace="support"
                     data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                     className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-semibold transition-all hover:-translate-y-0.5"
                   >

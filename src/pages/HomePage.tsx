@@ -213,8 +213,8 @@ export default function HomePage() {
                   onClick={() => navigate('/support')}
                   className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap"
                 >
-                  <span className="sm:hidden">Support</span>
-                  <span className="hidden sm:inline">Go to Support</span>
+                  <span className="sm:hidden">Get Support</span>
+                  <span className="hidden sm:inline">Get Support Now</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
@@ -223,7 +223,7 @@ export default function HomePage() {
                   data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
                 >
-                  Schedule Call
+                  Services
                 </button>
               </motion.div>
             </div>
@@ -610,22 +610,12 @@ export default function HomePage() {
                         <p className="text-blue-100 text-sm lg:text-base leading-relaxed mb-8 relative z-10">
                           Get your system back online with our enterprise-grade support.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-3 w-full">
-                          <button 
-                            onClick={() => navigate('/support')}
-                            className="group relative z-10 bg-white text-brand-blue hover:bg-slate-50 px-6 py-4 rounded-full text-sm lg:text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex-1 flex items-center justify-center gap-2"
-                          >
-                            Support <ArrowRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                          </button>
-                          <button 
-                            data-cal-link="fixline-systems-mgiaor/support"
-                            data-cal-namespace="support"
-                            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                            className="group relative z-10 bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-4 rounded-full text-sm lg:text-base font-bold transition-all flex-1 flex items-center justify-center gap-2"
-                          >
-                            Schedule Call
-                          </button>
-                        </div>
+                        <button 
+                          onClick={() => navigate('/support')}
+                          className="group relative z-10 bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-sm lg:text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full flex items-center justify-center gap-2"
+                        >
+                          Get Diagnosis <ArrowRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
+                        </button>
                       </motion.div>
                     </motion.div>
 
@@ -792,11 +782,6 @@ export default function HomePage() {
                 Fixline provides the infrastructure that keeps teams productive.
               </p>
             </div>
-            <div className="mt-6 md:mt-0">
-              <button className="text-brand-blue font-semibold hover:text-brand-navy transition-colors flex items-center gap-2 group">
-                View All Products <ArrowRight size={20} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
           </motion.div>
 
           <div className="flex overflow-x-auto gap-6 pb-12 pt-4 px-6 lg:px-12 hide-scrollbar snap-x snap-mandatory -mx-6 lg:-mx-12">
@@ -891,20 +876,13 @@ export default function HomePage() {
                 <span className="font-bold">that takes your device performance seriously?</span>
               </h3>
             </div>
-            <div className="lg:w-1/3 flex flex-col sm:flex-row justify-center lg:justify-end gap-3 sm:gap-4">
+            <div className="lg:w-1/3 flex justify-center lg:justify-end">
               <button 
                 onClick={() => navigate('/support')}
-                className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
+                className="bg-white hover:bg-slate-50 text-brand-blue px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
               >
-                <span className="text-base tracking-wide whitespace-nowrap">Go to Support</span>
-              </button>
-              <button 
-                data-cal-link="fixline-systems-mgiaor/support"
-                data-cal-namespace="support"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-6 py-4 rounded-full font-bold transition-all flex items-center justify-center gap-2 group w-full sm:w-auto"
-              >
-                <span className="text-base tracking-wide whitespace-nowrap">Schedule Call</span>
+                <span className="text-base tracking-wide whitespace-nowrap">Start Free Diagnostics</span>
+                <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
           </motion.div>

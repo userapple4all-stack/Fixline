@@ -378,10 +378,10 @@ export default function AboutPage() {
             </div>
             
             <div className="lg:w-1/3 flex justify-center lg:justify-end">
-              <button className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto">
+              <Link to="/support" className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto">
                 <span className="text-base tracking-wide whitespace-nowrap">Consult an engineer</span>
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

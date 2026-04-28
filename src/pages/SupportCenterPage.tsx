@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MagnifyingGlass, CalendarBlank, CheckCircle, CircleDashed, FileText, Receipt, WarningCircle } from '@phosphor-icons/react';
+import { MagnifyingGlass, CalendarBlank, CheckCircle, CircleDashed, FileText, Receipt, WarningCircle, ArrowRight } from '@phosphor-icons/react';
+import ScheduleCallButton from '../components/ScheduleCallButton';
 
 type TimelineEvent = {
   id: string;
@@ -17,6 +18,8 @@ type RepairJobInfo = {
   status: string;
   timeline: TimelineEvent[];
 };
+
+const VALID_JOB_IDS = ['FXL-10492', 'FXL-99887', 'FXL-55412'];
 
 export default function SupportCenterPage() {
   const [jobId, setJobId] = useState('');
@@ -73,11 +76,13 @@ export default function SupportCenterPage() {
         body: formData,
       });
       setIsSubmitting(false);
+      // In production, we'd get the real job number from the response
       setRepairSuccess({ jobNumber: `FXL-${Math.floor(Math.random() * 90000) + 10000}` });
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
       setIsSubmitting(false);
+      // Simulation for prototype
       setRepairSuccess({ jobNumber: `FXL-${Math.floor(Math.random() * 90000) + 10000}` });
       form.reset();
     }
@@ -95,7 +100,8 @@ export default function SupportCenterPage() {
     setTimeout(() => {
       setIsSearching(false);
       
-      if (query.startsWith('FXL-')) {
+      // Strict validation against our allowed test list
+      if (VALID_JOB_IDS.includes(query)) {
         setActiveJob({
           id: query,
           model: 'Lenovo ThinkPad X1 Carbon',
@@ -134,7 +140,7 @@ export default function SupportCenterPage() {
         });
       } else {
         setActiveJob(null);
-        setError("We couldn't find a repair job with that ID. Please note valid IDs typically start with 'FXL-'.");
+        setError("We couldn't find a repair job with that ID. Please check the ID provided to you.");
       }
     }, 800);
   };
@@ -312,78 +318,78 @@ export default function SupportCenterPage() {
         transition={{ duration: 0.7 }}
         className="py-10 lg:py-16 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200"
       >
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 relative z-10 w-full">
-          <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between mb-10 gap-6 border-b border-slate-100 pb-8">
-            <div className="flex flex-col items-start w-full">
-              <button
-                data-cal-link="fixline-systems-mgiaor/support"
-                data-cal-namespace="support"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-bold text-sm mb-6 transition-colors"
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div className="flex flex-col items-start lg:pr-12">
+              <h3 className="text-4xl font-bold text-brand-navy mb-6">Book a Repair</h3>
+              <p className="text-lg text-slate-600 mb-8">
+                Tell us about your device and the problem you're experiencing to get a repair job number.
+              </p>
+              <ScheduleCallButton
+                className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-bold text-sm transition-colors whitespace-nowrap"
               >
                 <CalendarBlank size={18} weight="bold" />
                 <span>Prefer to schedule a call?</span>
-              </button>
-              <h3 className="text-2xl font-bold text-brand-navy mb-2">Book a Repair</h3>
-              <p className="text-slate-600 max-w-xl">
-                Tell us about your device and the problem you're experiencing to get a repair job number.
-              </p>
+              </ScheduleCallButton>
             </div>
-          </div>
-          
-          <div className="w-full">
-            {repairSuccess ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="max-w-lg mx-auto p-8 md:p-12 text-center bg-blue-50 border border-blue-100 rounded-2xl flex flex-col items-center"
-              >
-                <div className="w-16 h-16 bg-white text-brand-blue rounded-full shadow-sm flex items-center justify-center mb-6">
-                  <CheckCircle size={32} weight="fill" />
-                </div>
-                <h4 className="text-2xl font-bold text-brand-navy mb-2">Repair Requested</h4>
-                <p className="text-slate-600 mb-6">
-                  Your repair has been logged successfully. Use the job number below to track the progress in the search bar above.
-                </p>
-                <div className="bg-white px-6 py-4 rounded-xl border border-blue-200 shadow-sm w-full mb-8">
-                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Job Number</p>
-                  <p className="text-brand-blue font-mono text-xl font-bold">{repairSuccess.jobNumber}</p>
-                </div>
-                <button 
-                  onClick={() => {
-                    setRepairSuccess(null);
-                    setJobId(repairSuccess.jobNumber);
-                  }}
-                  className="bg-brand-navy hover:bg-brand-blue text-white font-bold py-3 px-6 rounded-xl transition-colors w-full"
+            
+            <div className="w-full">
+              {repairSuccess ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-8 md:p-12 text-center bg-blue-50 border border-blue-100 rounded-2xl flex flex-col items-center"
                 >
-                  Track This Repair
-                </button>
-              </motion.div>
-            ) : (
-              <div className="max-w-2xl mx-auto">
-                <form onSubmit={handleRepairSubmit} className="space-y-6">
+                  <div className="w-16 h-16 bg-white text-brand-blue rounded-full shadow-sm flex items-center justify-center mb-6">
+                    <CheckCircle size={32} weight="fill" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-brand-navy mb-2">Repair Requested</h4>
+                  <p className="text-slate-600 mb-6">
+                    Your repair has been logged successfully. Use the job number below to track the progress in the search bar above.
+                  </p>
+                  <div className="bg-white px-6 py-4 rounded-xl border border-blue-200 shadow-sm w-full mb-8">
+                    <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Job Number</p>
+                    <p className="text-brand-blue font-mono text-xl font-bold">{repairSuccess.jobNumber}</p>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setRepairSuccess(null);
+                      setJobId(repairSuccess.jobNumber);
+                    }}
+                    className="bg-brand-navy hover:bg-brand-blue text-white font-bold py-3 px-6 rounded-xl transition-colors w-full"
+                  >
+                    Track This Repair
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleRepairSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-bold text-brand-navy mb-2">Full Name</label>
-                    <input type="text" name="customerName" placeholder="Your name" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                    <input type="text" name="customerName" placeholder="Your name" className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-all" required />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-brand-navy mb-2">Email Address</label>
-                    <input type="email" name="customerEmail" placeholder="Your email" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                    <input type="email" name="customerEmail" placeholder="Your email" className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-all" required />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-brand-navy mb-2">Device Model</label>
-                    <input type="text" name="deviceModel" placeholder="e.g. MacBook Pro 2021" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                    <input type="text" name="deviceModel" placeholder="e.g. MacBook Pro 2021" className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-all" required />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-brand-navy mb-2">Problem Description</label>
-                    <textarea name="problem" placeholder="Describe the issue" className="w-full border border-slate-200 rounded-xl px-4 py-3 min-h-[120px]" required></textarea>
+                    <textarea name="problem" placeholder="Describe the issue" className="w-full border border-slate-200 rounded-xl px-4 py-3 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-all" required></textarea>
                   </div>
-                  <button type="submit" disabled={isSubmitting} className="w-full bg-brand-blue hover:bg-brand-navy disabled:opacity-50 text-white font-bold py-4 rounded-xl transition-colors">
-                    {isSubmitting ? 'Submitting...' : 'Submit Repair Request'}
+                  <button type="submit" disabled={isSubmitting} className="w-full bg-brand-blue hover:bg-brand-blue-hover disabled:opacity-50 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 group">
+                    {isSubmitting ? 'Submitting...' : (
+                      <>
+                        <span>Submit Repair Request</span>
+                        <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
                   </button>
                 </form>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </motion.section>

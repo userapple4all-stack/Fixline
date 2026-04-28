@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import fixlineLogo2 from '/assets/fixline-logo2.svg';
 const fixlineFoot = '/assets/fixline-foot.svg';
 import { Link } from "react-router-dom";
@@ -12,8 +12,16 @@ import {
   InstagramLogo,
   ArrowUpRight,
 } from "@phosphor-icons/react";
+import Modal from "./Modal";
+import PrivacyPolicyContent from "./legal/PrivacyPolicyContent";
+import TermsOfServiceContent from "./legal/TermsOfServiceContent";
+import CookiePolicyContent from "./legal/CookiePolicyContent";
 
 export default function Footer() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  const closeModal = () => setActiveModal(null);
+
   return (
     <footer className="bg-brand-navy text-slate-400 pt-16 pb-8 border-t border-white/10 mt-auto relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
@@ -220,21 +228,43 @@ export default function Footer() {
         {/* Legals */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs relative z-10">
           <div className="flex flex-wrap justify-center md:justify-start gap-6">
-            <Link to="/" className="hover:text-white transition-colors">
+            <button onClick={() => setActiveModal('privacy')} className="hover:text-white transition-colors">
               Privacy Policy
-            </Link>
-            <Link to="/" className="hover:text-white transition-colors">
+            </button>
+            <button onClick={() => setActiveModal('terms')} className="hover:text-white transition-colors">
               Terms of Service
-            </Link>
-            <Link to="/" className="hover:text-white transition-colors">
+            </button>
+            <button onClick={() => setActiveModal('cookie')} className="hover:text-white transition-colors">
               Cookie Policy
-            </Link>
+            </button>
           </div>
           <div>
             &copy; {new Date().getFullYear()} Fixline Digital. All rights reserved.
           </div>
         </div>
       </div>
+
+      <Modal 
+        isOpen={activeModal === 'privacy'} 
+        onClose={closeModal} 
+        title="Privacy Policy"
+      >
+        <PrivacyPolicyContent />
+      </Modal>
+      <Modal 
+        isOpen={activeModal === 'terms'} 
+        onClose={closeModal} 
+        title="Terms of Service"
+      >
+        <TermsOfServiceContent />
+      </Modal>
+      <Modal 
+        isOpen={activeModal === 'cookie'} 
+        onClose={closeModal} 
+        title="Cookie Policy"
+      >
+        <CookiePolicyContent />
+      </Modal>
     </footer>
   );
 }

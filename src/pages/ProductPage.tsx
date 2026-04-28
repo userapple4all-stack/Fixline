@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import fixlineMotif from '/assets/fixline-motif.svg';
 import { Network, DesktopTower, TerminalWindow, Wrench, PhoneCall, EnvelopeSimple } from '@phosphor-icons/react';
+import ScheduleCallButton from '../components/ScheduleCallButton';
 
 const productData: Record<string, any> = {
   networks: {
@@ -63,7 +64,7 @@ export default function ProductPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-16 relative z-10 text-left"
+          className="mb-16 relative z-10 flex flex-col items-center text-center"
         >
           <div className="w-20 h-20 bg-white rounded-3xl shadow-md border border-slate-100 flex items-center justify-center text-brand-blue mb-8">
             <Icon size={40} weight="duotone" />
@@ -121,15 +122,12 @@ export default function ProductPage() {
                     Write to us
                   </Link>
                   
-                  <button 
-                    data-cal-link="fixline-systems-mgiaor/15min"
-                    data-cal-namespace="15min"
-                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  <ScheduleCallButton 
                     className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-semibold transition-all hover:-translate-y-0.5"
                   >
                     <PhoneCall size={20} weight="bold" />
                     Schedule a call
-                  </button>
+                  </ScheduleCallButton>
                 </div>
               </div>
             </div>
