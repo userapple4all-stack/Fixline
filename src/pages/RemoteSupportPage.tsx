@@ -48,15 +48,20 @@ export default function RemoteSupportPage() {
               </p>
               
               <div className="flex flex-row gap-3 sm:gap-4">
-                <Link to="/contact" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
+                <Link to="/support" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
                   <span className="sm:hidden">Start Fix</span>
                   <span className="hidden sm:inline">Initiate Remote Fix</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link to="/contact" className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap">
-                  <span className="sm:hidden">Consult</span>
-                  <span className="hidden sm:inline">Speak to an Expert</span>
-                </Link>
+                <button 
+                  data-cal-link="fixline-systems-mgiaor/support"
+                  data-cal-namespace="support"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
+                >
+                  <span className="sm:hidden">Call</span>
+                  <span className="hidden sm:inline">Schedule Call</span>
+                </button>
               </div>
             </motion.div>
 
@@ -166,11 +171,24 @@ export default function RemoteSupportPage() {
                 <p className="text-slate-600 text-[17px] sm:text-lg leading-relaxed mb-8">
                   If the issue requires hardware repair, the technician will recommend the appropriate next step and schedule an in-person repair if necessary.
                 </p>
-                <div className="flex">
-                  <Link to="/contact" className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group">
+                <div className="flex flex-col gap-4">
+                  <button 
+                    data-cal-link="fixline-systems-mgiaor/15min"
+                    data-cal-namespace="15min"
+                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                    className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group"
+                  >
                     <CalendarPlus size={28} weight="regular" className="group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
                     <span className="border-b-2 border-brand-blue/30 group-hover:border-brand-blue transition-colors pb-0.5">Start Remote Diagnosis</span>
-                  </Link>
+                  </button>
+
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <p className="text-sm font-semibold text-brand-navy mb-2">Prefer a call?</p>
+                    <div className="flex gap-2">
+                      <input type="tel" placeholder="Your phone number" className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue outline-none" />
+                      <button className="bg-brand-navy text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-brand-blue transition-colors">Call me</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -400,11 +418,18 @@ export default function RemoteSupportPage() {
                 <span className="font-bold text-white">while maintaining the same structured repair process used in <span className="text-blue-200">physical repair.</span></span>
               </h3>
             </div>
-            <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0">
-              <Link to="/contact" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Book a Remote Support Session</span>
-                <CalendarPlus size={20} weight="bold" className="shrink-0 transition-transform group-hover:scale-110" />
+            <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0 gap-3">
+              <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Support</span>
               </Link>
+              <button 
+                data-cal-link="fixline-systems-mgiaor/support"
+                data-cal-namespace="support"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all flex flex-row items-center justify-center gap-2 group w-full sm:w-auto"
+              >
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule Call</span>
+              </button>
             </div>
           </motion.div>
         </div>

@@ -121,13 +121,15 @@ export default function ProductPage() {
                     Write to us
                   </Link>
                   
-                  <a 
-                    href="tel:1-800-FIXLINE" 
+                  <button 
+                    data-cal-link="fixline-systems-mgiaor/15min"
+                    data-cal-namespace="15min"
+                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                     className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-semibold transition-all hover:-translate-y-0.5"
                   >
                     <PhoneCall size={20} weight="bold" />
                     Schedule a call
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

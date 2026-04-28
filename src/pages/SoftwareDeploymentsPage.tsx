@@ -46,15 +46,20 @@ export default function SoftwareDeploymentsPage() {
               </p>
               
               <div className="flex flex-row gap-3 sm:gap-4">
-                <Link to="/contact" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
-                  <span className="sm:hidden">Plan Now</span>
-                  <span className="hidden sm:inline">Plan a Rollout</span>
+                <Link to="/support" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
+                  <span className="sm:hidden">Support</span>
+                  <span className="hidden sm:inline">Go to Support</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link to="/contact" className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap">
-                  <span className="sm:hidden">Consult</span>
-                  <span className="hidden sm:inline">Speak to an Expert</span>
-                </Link>
+                <button 
+                  data-cal-link="fixline-systems-mgiaor/support"
+                  data-cal-namespace="support"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
+                >
+                  <span className="sm:hidden">Call</span>
+                  <span className="hidden sm:inline">Schedule Call</span>
+                </button>
               </div>
             </motion.div>
 
@@ -385,11 +390,18 @@ export default function SoftwareDeploymentsPage() {
                 <span className="font-bold text-white">operating efficiently and <span className="text-blue-200">securely over time.</span></span>
               </h3>
             </div>
-            <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0">
-              <Link to="/contact" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
-                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule A Rollout</span>
-                <CalendarPlus size={20} weight="bold" className="shrink-0 transition-transform group-hover:scale-110" />
+            <div className="shrink-0 w-full lg:w-auto flex justify-center mt-2 lg:mt-0 gap-3">
+              <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all hover:-translate-y-0.5 flex flex-row items-center justify-center gap-2 group w-full sm:w-auto">
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Support</span>
               </Link>
+              <button 
+                data-cal-link="fixline-systems-mgiaor/support"
+                data-cal-namespace="support"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all flex flex-row items-center justify-center gap-2 group w-full sm:w-auto"
+              >
+                <span className="text-[13px] sm:text-[15px] tracking-wide whitespace-nowrap">Schedule Call</span>
+              </button>
             </div>
           </motion.div>
         </div>

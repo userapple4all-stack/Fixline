@@ -103,6 +103,17 @@ export default function HomePage() {
   const fullWelcomeText = "Welcome to Fixline";
   const navigate = useNavigate();
 
+  // Scroll to hash on load or hash change
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.getElementById(hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     
@@ -199,18 +210,20 @@ export default function HomePage() {
                 className="flex flex-row gap-3 sm:gap-4"
               >
                 <button 
-                  onClick={() => navigate('/contact')}
+                  onClick={() => navigate('/support')}
                   className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap"
                 >
-                  <span className="sm:hidden">Get Support</span>
-                  <span className="hidden sm:inline">Get Support Now</span>
+                  <span className="sm:hidden">Support</span>
+                  <span className="hidden sm:inline">Go to Support</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                  data-cal-link="fixline-systems-mgiaor/support"
+                  data-cal-namespace="support"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
                 >
-                  Services
+                  Schedule Call
                 </button>
               </motion.div>
             </div>
@@ -222,13 +235,13 @@ export default function HomePage() {
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
               className="relative hidden lg:block"
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/50 bg-white">
+              <div className="relative rounded-3xl overflow-hidden border border-white/50 bg-white">
                 <img 
                   src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200" 
                   alt="Inviting tech workspace" 
                   className="w-full h-[550px] object-cover"
                   referrerPolicy="no-referrer"
-                  loading="lazy"
+                  fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/5 to-transparent mix-blend-overlay"></div>
               </div>
@@ -381,7 +394,8 @@ export default function HomePage() {
                       onClick={() => navigate(service.path || `/service/${service.id}`)}
                       className="bg-brand-navy hover:bg-slate-800 text-white px-8 py-4 rounded-full text-sm font-semibold transition-all flex items-center gap-2 group w-fit"
                     >
-                      {service.buttonText} <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
+                      {service.buttonText} 
+                      <ArrowRight size={18} weight="bold" className="text-brand-blue group-hover:text-white transition-colors" />
                     </button>
                   </div>
                   <div className="order-1 lg:order-2">
@@ -596,12 +610,22 @@ export default function HomePage() {
                         <p className="text-blue-100 text-sm lg:text-base leading-relaxed mb-8 relative z-10">
                           Get your system back online with our enterprise-grade support.
                         </p>
-                        <button 
-                          onClick={() => navigate('/contact')}
-                          className="group relative z-10 bg-white text-brand-blue hover:bg-slate-50 px-8 py-4 rounded-full text-sm lg:text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full flex items-center justify-center gap-2"
-                        >
-                          Get Diagnosis <ArrowRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                        </button>
+                        <div className="flex flex-col sm:flex-row gap-3 w-full">
+                          <button 
+                            onClick={() => navigate('/support')}
+                            className="group relative z-10 bg-white text-brand-blue hover:bg-slate-50 px-6 py-4 rounded-full text-sm lg:text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex-1 flex items-center justify-center gap-2"
+                          >
+                            Support <ArrowRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
+                          </button>
+                          <button 
+                            data-cal-link="fixline-systems-mgiaor/support"
+                            data-cal-namespace="support"
+                            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                            className="group relative z-10 bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-4 rounded-full text-sm lg:text-base font-bold transition-all flex-1 flex items-center justify-center gap-2"
+                          >
+                            Schedule Call
+                          </button>
+                        </div>
                       </motion.div>
                     </motion.div>
 
@@ -867,18 +891,155 @@ export default function HomePage() {
                 <span className="font-bold">that takes your device performance seriously?</span>
               </h3>
             </div>
-            <div className="lg:w-1/3 flex justify-center lg:justify-end">
+            <div className="lg:w-1/3 flex flex-col sm:flex-row justify-center lg:justify-end gap-3 sm:gap-4">
               <button 
-                onClick={() => navigate('/contact')}
-                className="bg-white hover:bg-slate-50 text-brand-blue px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
+                onClick={() => navigate('/support')}
+                className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
               >
-                <span className="text-base tracking-wide whitespace-nowrap">Start Free Diagnostics</span>
-                <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
+                <span className="text-base tracking-wide whitespace-nowrap">Go to Support</span>
+              </button>
+              <button 
+                data-cal-link="fixline-systems-mgiaor/support"
+                data-cal-namespace="support"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-6 py-4 rounded-full font-bold transition-all flex items-center justify-center gap-2 group w-full sm:w-auto"
+              >
+                <span className="text-base tracking-wide whitespace-nowrap">Schedule Call</span>
               </button>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <motion.section 
+        id="testimonials"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-10 lg:py-12 bg-slate-50 relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="mb-10 max-w-3xl"
+          >
+            <h2 className="text-brand-blue font-semibold tracking-wide uppercase text-sm mb-3 flex items-center gap-2">
+              <span className="w-8 h-px bg-brand-blue"></span>
+              Testimonials
+            </h2>
+            <h3 className="font-heading text-4xl md:text-5xl font-bold text-brand-navy mb-4 tracking-tight">
+              What our clients say.
+            </h3>
+            <p className="text-lg text-slate-500 font-light max-w-2xl">
+              Don't just take our word for it. Here is what happened when people trusted us with their systems and IT infrastructure.
+            </p>
+          </motion.div>
+
+          <div className="flex overflow-x-auto lg:grid lg:grid-cols-3 gap-4 snap-x snap-mandatory lg:snap-none hide-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0 pb-8 lg:pb-0">
+            {/* Column 1 */}
+            <div className="flex flex-col gap-4 shrink-0 w-[85vw] sm:w-[350px] lg:w-auto snap-center">
+              <div className="bg-brand-blue rounded-xl p-6 flex flex-col justify-between text-white shadow-lg h-full">
+                <div>
+                  <p className="text-xl font-medium leading-relaxed mb-6 tracking-tight">
+                    "Fixline makes it easy to maintain our office infrastructure. I can deploy fresh systems in seconds. You only pay for what you use, letting you focus on business value instead of IT."
+                  </p>
+                </div>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-semibold text-sm">Kevin Mutua</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Kevin+Mutua&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-brand-blue/30 hover:shadow-md transition-all h-full flex flex-col justify-between">
+                <p className="text-slate-700 text-[15px] font-medium leading-relaxed mb-6">
+                  "Wow, Fixline is very smooth! Took almost no time to repair my broken MacBook screen."
+                </p>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm text-brand-navy">Emily Watson</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Emily+Watson&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2 */}
+            <div className="flex flex-col gap-4 shrink-0 w-[85vw] sm:w-[350px] lg:w-auto snap-center">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-brand-blue/30 hover:shadow-md transition-all h-full flex flex-col justify-between">
+                <p className="text-slate-700 text-[15px] font-medium leading-relaxed mb-6">
+                  "Fixline exceeded all of my expectations and was so easy to work with!"
+                </p>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm text-brand-navy">Priya Sharma</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-brand-blue/30 hover:shadow-md transition-all h-full flex flex-col justify-between">
+                <p className="text-slate-700 text-[15px] font-medium leading-relaxed mb-6">
+                  "Onboarding was smooth and professional. The team made the whole remote support experience very straightforward, and I was back up and running in no time."
+                </p>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm text-brand-navy">Lukas Müller</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Lukas+Muller&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-brand-blue/30 hover:shadow-md transition-all h-full flex flex-col justify-between">
+                <p className="text-slate-700 text-[15px] font-medium leading-relaxed mb-6">
+                  "Fixline handled our initial office network setup with surprising precision. They managed the device configuration and infrastructure rollout without interrupting our daily operations."
+                </p>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm text-brand-navy">Samuel Wekesa</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Samuel+Wekesa&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3 */}
+            <div className="flex flex-col gap-4 shrink-0 w-[85vw] sm:w-[350px] lg:w-auto snap-center">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-brand-blue/30 hover:shadow-md transition-all h-full flex flex-col justify-between">
+                <p className="text-slate-700 text-[15px] font-medium leading-relaxed mb-6">
+                  "Fixline is the next generation standard for powering business hardware. This is the future of IT infra for modern companies."
+                </p>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm text-brand-navy">David Kimani</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=David+Kimani&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-brand-blue rounded-xl p-6 flex flex-col justify-between text-white shadow-lg h-full">
+                <div>
+                  <p className="text-xl font-medium leading-relaxed mb-6 tracking-tight">
+                    "Selected my service, booked an assessment, and boom. 60 seconds later my request was handled! I didn't even have to configure anything."
+                  </p>
+                </div>
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <p className="font-bold text-sm">Thabo Mokoena</p>
+                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Thabo+Mokoena&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
     </>
   );
 }

@@ -1,13 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fixlineLogo from '/assets/fixline-logo.svg';
 import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { CaretDown, Desktop, Wrench, HardDrives, TerminalWindow, ArrowRight, DesktopTower, Network, Lifebuoy, FileText, Certificate, List, X, Phone, Newspaper } from '@phosphor-icons/react';
+import { CaretDown, Desktop, Wrench, HardDrives, TerminalWindow, ArrowRight, DesktopTower, Network, Lifebuoy, FileText, GraduationCap, Certificate, List, X, Phone, Newspaper } from '@phosphor-icons/react';
+
+const navServicesData = {
+  'remote': {
+    title: 'Remote Support',
+    description: 'Fast software repair without leaving your desk.',
+    image: '/assets/images/support-image.svg',
+    cta: 'Start Remote Fix',
+    path: '/service/remote'
+  },
+  'hardware-lab': {
+    title: 'Hardware Repair Workshop',
+    description: 'Physical repairs, upgrades, and maintenance.',
+    image: '/assets/images/fixline-hardware-repair.svg',
+    cta: 'Book a Repair',
+    path: '/service/hardware-lab'
+  },
+  'consult': {
+    title: 'Technical Consultation',
+    description: 'Expert advice for your IT infrastructure.',
+    image: '/assets/images/fixline-consultation.svg',
+    cta: 'Speak with a Consultant',
+    path: '/service/consult'
+  },
+  'install': {
+    title: 'Software Deployments',
+    description: 'Roll out updates and new systems securely.',
+    image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=60&w=800',
+    cta: 'Request an Install',
+    path: '/service/install'
+  }
+};
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [hoveredService, setHoveredService] = useState<keyof typeof navServicesData>('remote');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleMobileMenuClick = (path: string) => {
     navigate(path);
@@ -16,7 +57,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100">
+    <motion.nav
+      className={`relative z-50 w-full transition-all duration-500 ease-in-out ${
+        isScrolled
+          ? "bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm"
+          : "bg-white/80 backdrop-blur-sm border-b border-transparent"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
@@ -35,7 +82,7 @@ export default function Navbar() {
                   <div className="flex-1">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">What we do</p>
                     <div className="flex flex-col gap-5">
-                      <Link to="/service/remote" className="flex gap-4 group/item">
+                      <Link to="/service/remote" onMouseEnter={() => setHoveredService('remote')} className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <Desktop size={20} weight="regular" />
                         </div>
@@ -44,7 +91,7 @@ export default function Navbar() {
                           <p className="text-xs text-slate-500 leading-snug">Fast software repair without leaving your desk.</p>
                         </div>
                       </Link>
-                      <Link to="/service/hardware-lab" className="flex gap-4 group/item">
+                      <Link to="/service/hardware-lab" onMouseEnter={() => setHoveredService('hardware-lab')} className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <Wrench size={20} weight="regular" />
                         </div>
@@ -53,7 +100,7 @@ export default function Navbar() {
                           <p className="text-xs text-slate-500 leading-snug">Physical repairs, upgrades, and maintenance.</p>
                         </div>
                       </Link>
-                      <Link to="/service/consult" className="flex gap-4 group/item">
+                      <Link to="/service/consult" onMouseEnter={() => setHoveredService('consult')} className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <HardDrives size={20} weight="regular" />
                         </div>
@@ -62,7 +109,7 @@ export default function Navbar() {
                           <p className="text-xs text-slate-500 leading-snug">Expert advice for your IT infrastructure.</p>
                         </div>
                       </Link>
-                      <Link to="/service/install" className="flex gap-4 group/item">
+                      <Link to="/service/install" onMouseEnter={() => setHoveredService('install')} className="flex gap-4 group/item">
                         <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
                           <TerminalWindow size={20} weight="regular" />
                         </div>
@@ -75,26 +122,22 @@ export default function Navbar() {
                   </div>
 
                   {/* Right Column - Featured Card */}
-                  <div className="w-[260px] bg-slate-50 rounded-xl p-5 border border-slate-100 flex flex-col shrink-0">
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Coming Soon</p>
-                    <div className="bg-white border border-slate-100 rounded-lg p-4 mb-4 shadow-sm">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-slate-100"></div>
-                        <div className="flex-1 space-y-2">
-                          <div className="h-2 bg-slate-100 rounded w-3/4"></div>
-                          <div className="h-2 bg-slate-100 rounded w-full"></div>
-                        </div>
+                  <div className="w-[260px] bg-slate-50 rounded-xl p-5 border border-slate-100 flex flex-col shrink-0 relative overflow-hidden transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-transparent mix-blend-overlay z-0 pointer-events-none"></div>
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="w-full h-32 rounded-lg overflow-hidden mb-4 border border-slate-200/60 shadow-sm relative shrink-0">
+                        <img 
+                          src={navServicesData[hoveredService].image} 
+                          alt={navServicesData[hoveredService].title} 
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                        />
                       </div>
-                      <div className="space-y-2">
-                        <div className="h-2 bg-slate-100 rounded w-full"></div>
-                        <div className="h-2 bg-slate-100 rounded w-5/6"></div>
-                      </div>
+                      <p className="text-sm font-bold text-brand-navy mb-1">{navServicesData[hoveredService].title}</p>
+                      <p className="text-xs text-slate-500 leading-snug mb-3">{navServicesData[hoveredService].description}</p>
+                      <Link to={navServicesData[hoveredService].path} className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 mt-auto group/cta">
+                        {navServicesData[hoveredService].cta} <ArrowRight size={12} weight="bold" className="group-hover/cta:translate-x-1 transition-transform" />
+                      </Link>
                     </div>
-                    <p className="text-sm font-bold text-brand-navy mb-1">Fixline OS</p>
-                    <p className="text-xs text-slate-500 leading-snug mb-3">A dedicated operating system optimized for diagnostics and repair.</p>
-                    <a href="/" onClick={(e) => e.preventDefault()} className="text-xs font-medium text-brand-blue hover:text-brand-blue-hover flex items-center gap-1 mt-auto">
-                      Read the changelog <ArrowRight size={12} weight="bold" />
-                    </a>
                   </div>
                 </div>
               </div>
@@ -181,7 +224,7 @@ export default function Navbar() {
                     </Link>
                     <Link to="/training" className="flex gap-4 group/item">
                       <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 group-hover/item:bg-brand-blue group-hover/item:text-white transition-colors">
-                        <FileText size={20} weight="regular" />
+                        <GraduationCap size={20} weight="regular" />
                       </div>
                       <div>
                         <p className="text-sm font-bold text-brand-navy mb-0.5 group-hover/item:text-brand-blue transition-colors">Training</p>
@@ -241,12 +284,17 @@ export default function Navbar() {
             </div>
             
             
-            <Link to="/service/remote" className="group flex items-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm shadow-brand-blue/20">
-              Start Repair
-              <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
-                <ArrowRight size={16} weight="bold" />
-              </span>
+            <Link to="/support" className="text-sm font-medium text-slate-600 hover:text-brand-blue transition-colors py-2 px-3 lg:px-4">
+              Support
             </Link>
+            <button 
+              data-cal-link="fixline-systems-mgiaor/support"
+              data-cal-namespace="support"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              className="group flex items-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm shadow-brand-blue/20"
+            >
+              Schedule Call
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -356,18 +404,26 @@ export default function Navbar() {
               )}
             </div>
 
-            <button 
-              onClick={() => handleMobileMenuClick('/service/remote')}
-              className="group flex items-center justify-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-sm font-bold w-full mt-6 shadow-sm shadow-brand-blue/20 transition-all"
-            >
-              Start Repair
-              <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
-                <ArrowRight size={16} weight="bold" />
-              </span>
-            </button>
+            <div className="flex gap-3 mt-6">
+              <button 
+                onClick={() => handleMobileMenuClick('/support')}
+                className="flex-1 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-brand-navy px-5 py-3 rounded-full text-sm font-bold shadow-sm transition-all"
+              >
+                Support
+              </button>
+              <button 
+                data-cal-link="fixline-systems-mgiaor/support"
+                data-cal-namespace="support"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex-1 flex items-center justify-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-sm font-bold shadow-sm shadow-brand-blue/20 transition-all"
+              >
+                Schedule Call
+              </button>
+            </div>
           </div>
         </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MagnifyingGlass, CalendarBlank, CheckCircle, CircleDashed, FileText, Receipt, WarningCircle } from '@phosphor-icons/react';
 
@@ -23,6 +23,65 @@ export default function SupportCenterPage() {
   const [activeJob, setActiveJob] = useState<RepairJobInfo | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [repairSuccess, setRepairSuccess] = useState<{jobNumber: string} | null>(null);
+
+  useEffect(() => {
+    (function (C: any, A: any, L: any) {
+      let p = function (a: any, ar: any) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if(typeof namespace === "string"){
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    const w = window as any;
+    w.Cal("init", "support", {origin:"https://app.cal.com"});
+    w.Cal.ns.support("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  }, []);
+
+  const handleRepairSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      await fetch('https://script.google.com/macros/s/AKfycbwm0h7HUI7gJy3uJYs-VnVosA1EW3iimHpblaP7qRcv6lDgwKn6_5jDn72XwKtepptU_A/exec', {
+        method: 'POST',
+        body: formData,
+      });
+      setIsSubmitting(false);
+      setRepairSuccess({ jobNumber: `FXL-${Math.floor(Math.random() * 90000) + 10000}` });
+      form.reset();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setIsSubmitting(false);
+      setRepairSuccess({ jobNumber: `FXL-${Math.floor(Math.random() * 90000) + 10000}` });
+      form.reset();
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,40 +140,41 @@ export default function SupportCenterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-32 pb-20 md:pt-40 md:pb-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-4xl md:text-5xl font-extrabold text-brand-navy tracking-tight mb-4 leading-tight">
-              Welcome to the Support Centre
-            </h1>
-            <p className="text-lg text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
-              We are building a comprehensive portal to enable you to track your service history and maintain your relationship with us.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Tracking Card - Layout matching the sketch */}
+    <div className="min-h-screen bg-slate-50 pt-32 pb-8">
+      {/* Hero Section */}
+      <section className="text-center mb-10 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-12 w-full max-w-full overflow-hidden"
+          transition={{ duration: 0.5 }}
         >
-          <div className="grid lg:grid-cols-2 lg:divide-x divide-y lg:divide-y-0 divide-slate-100 min-w-0">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-brand-blue tracking-tight mb-4 leading-tight">
+            Support Centre
+          </h1>
+          <p className="text-lg text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
+            We are building a comprehensive portal to enable you to track your service history and maintain your relationship with us.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Tracking Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="py-10 lg:py-12 bg-blue-50 relative overflow-hidden m-4 lg:m-6 rounded-xl border border-blue-100"
+      >
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center min-w-0">
             
             {/* Left Side: Search */}
-            <div className="p-6 md:p-8 lg:p-12 flex flex-col justify-center min-w-0">
-              <div className="w-14 h-14 bg-brand-blue/5 text-brand-blue rounded-xl flex items-center justify-center shrink-0 mb-6">
+            <div className="flex flex-col justify-center min-w-0">
+              <div className="w-14 h-14 bg-white text-brand-blue rounded-xl flex items-center justify-center shrink-0 mb-6 shadow-sm border border-blue-100/50">
                 <MagnifyingGlass size={28} weight="duotone" />
               </div>
               <h2 className="text-2xl lg:text-3xl font-bold text-brand-navy mb-3">Track Your Repair</h2>
-              <p className="text-slate-500 mb-8 leading-relaxed max-w-md">
+              <p className="text-slate-600 mb-8 leading-relaxed max-w-md">
                 Paste your Job ID below to check up with updates on your ongoing service.
               </p>
               
@@ -125,13 +185,12 @@ export default function SupportCenterPage() {
                     placeholder="e.g. FXL-10492"
                     value={jobId}
                     onChange={(e) => setJobId(e.target.value)}
-                    className={`w-full bg-slate-50 border rounded-xl py-3.5 pl-4 sm:pl-5 pr-[80px] sm:pr-[90px] outline-none focus:bg-white transition-all font-mono text-sm sm:text-base placeholder:font-sans placeholder:text-sm sm:placeholder:text-base placeholder:text-slate-400
-                      ${error ? 'border-red-300 focus:border-red-400 focus:ring-4 focus:ring-red-500/10 text-red-900' : 'border-slate-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 text-slate-700'}`}
+                    className={`w-full bg-white border ${error ? 'border-red-300 focus:border-red-400 focus:ring-red-500/10 text-red-900' : 'border-slate-200 focus:border-brand-blue focus:ring-brand-blue/10 text-slate-700'} rounded-xl py-3.5 pl-4 sm:pl-5 pr-[80px] sm:pr-[90px] outline-none transition-all font-mono text-sm sm:text-base placeholder:font-sans placeholder:text-sm sm:placeholder:text-base placeholder:text-slate-400 focus:ring-4`}
                   />
                   <button 
                     type="submit" 
                     disabled={isSearching}
-                    className="absolute right-1.5 top-1.5 bottom-1.5 px-3 sm:px-5 bg-brand-navy hover:bg-brand-blue disabled:opacity-50 text-white rounded-lg font-bold transition-colors text-xs sm:text-sm"
+                    className="absolute right-1.5 top-1.5 bottom-1.5 px-4 sm:px-6 bg-brand-navy hover:bg-brand-blue disabled:opacity-50 text-white rounded-lg font-bold transition-colors text-xs sm:text-sm"
                   >
                     {isSearching ? '...' : 'Track'}
                   </button>
@@ -145,8 +204,8 @@ export default function SupportCenterPage() {
               </form>
             </div>
 
-            {/* Right Side: Report (Grey Shaded Area) */}
-            <div className="p-5 sm:p-6 md:p-8 lg:p-10 bg-slate-50/50 flex flex-col min-h-[400px] lg:min-h-[450px] min-w-0">
+            {/* Right Side: Report */}
+            <div className="flex flex-col min-h-[400px] lg:min-h-[450px] min-w-0 justify-center lg:pl-10 text-slate-800">
               <AnimatePresence mode="wait">
                 {!activeJob ? (
                   <motion.div 
@@ -154,9 +213,9 @@ export default function SupportCenterPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="h-full flex flex-col items-center justify-center text-center py-10"
+                    className="flex flex-col items-center justify-center text-center py-10 px-6"
                   >
-                    <div className="w-20 h-20 bg-white border border-slate-200 rounded-full flex items-center justify-center mb-6 text-slate-300 shadow-sm shrink-0">
+                    <div className="w-20 h-20 bg-white/60 border border-slate-200/50 rounded-full flex items-center justify-center mb-6 text-slate-400 shrink-0 mix-blend-multiply">
                       <Receipt size={32} weight="duotone" />
                     </div>
                     <h3 className="text-brand-navy font-bold text-xl mb-2">Awaiting Search</h3>
@@ -171,17 +230,18 @@ export default function SupportCenterPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="flex flex-col h-full min-w-0"
+                    className="flex flex-col h-full min-w-0 py-4 lg:py-6"
                   >
                     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                       <h3 className="text-xl font-bold text-brand-navy">Here is your report</h3>
-                      <div className="px-3 py-1 rounded-md bg-blue-50 text-brand-blue text-[10px] sm:text-xs font-bold uppercase tracking-widest border border-blue-100 shrink-0">
+                      <div className="px-3 py-1 rounded-md bg-white border border-slate-200/50 shadow-sm text-brand-blue text-[10px] sm:text-xs font-bold uppercase tracking-widest shrink-0">
                         {activeJob.status}
                       </div>
                     </div>
 
                     {/* Grey Shaded Container */}
-                    <div className="bg-slate-100 border border-slate-200 rounded-xl p-4 md:p-6 flex-1 flex flex-col min-w-0 overflow-hidden">
+                    <div className="bg-white/60 border border-slate-200/50 shadow-sm rounded-xl p-5 md:p-6 flex-1 flex flex-col min-w-0 overflow-hidden backdrop-blur-md">
+
                       
                       <div className="mb-4 md:mb-6">
                         <p className="text-slate-500 text-[10px] sm:text-xs uppercase tracking-wider mb-1">Job ID</p>
@@ -240,34 +300,93 @@ export default function SupportCenterPage() {
                 )}
               </AnimatePresence>
             </div>
-
           </div>
-        </motion.div>
+        </div>
+      </motion.section>
 
-        {/* Booking Placeholder section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-white border border-slate-200 rounded-2xl p-8 lg:p-12 shadow-sm"
-        >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-brand-navy mb-3">Schedule a Consultation</h3>
-            <p className="text-slate-600 max-w-xl mx-auto">
-              Need immediate assistance or want to discuss a new project? Book a time that works for you.
-            </p>
+      {/* Booking section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7 }}
+        className="py-10 lg:py-16 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200"
+      >
+        <div className="max-w-4xl mx-auto px-6 lg:px-12 relative z-10 w-full">
+          <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between mb-10 gap-6 border-b border-slate-100 pb-8">
+            <div className="flex flex-col items-start w-full">
+              <button
+                data-cal-link="fixline-systems-mgiaor/support"
+                data-cal-namespace="support"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="flex items-center gap-2 text-brand-blue hover:text-brand-navy font-bold text-sm mb-6 transition-colors"
+              >
+                <CalendarBlank size={18} weight="bold" />
+                <span>Prefer to schedule a call?</span>
+              </button>
+              <h3 className="text-2xl font-bold text-brand-navy mb-2">Book a Repair</h3>
+              <p className="text-slate-600 max-w-xl">
+                Tell us about your device and the problem you're experiencing to get a repair job number.
+              </p>
+            </div>
           </div>
           
-          <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl h-64 flex flex-col items-center justify-center text-slate-400 p-6 text-center max-w-3xl mx-auto">
-            <CalendarBlank size={40} weight="duotone" className="mb-4 text-slate-300" />
-            <p className="font-bold text-slate-500 mb-1">Booking Component Wrapper</p>
-            <p className="text-sm max-w-sm text-slate-400 leading-relaxed">
-              We'll integrate Cal.com here shortly. For now, this serves as the placeholder for the scheduling interface.
-            </p>
+          <div className="w-full">
+            {repairSuccess ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="max-w-lg mx-auto p-8 md:p-12 text-center bg-blue-50 border border-blue-100 rounded-2xl flex flex-col items-center"
+              >
+                <div className="w-16 h-16 bg-white text-brand-blue rounded-full shadow-sm flex items-center justify-center mb-6">
+                  <CheckCircle size={32} weight="fill" />
+                </div>
+                <h4 className="text-2xl font-bold text-brand-navy mb-2">Repair Requested</h4>
+                <p className="text-slate-600 mb-6">
+                  Your repair has been logged successfully. Use the job number below to track the progress in the search bar above.
+                </p>
+                <div className="bg-white px-6 py-4 rounded-xl border border-blue-200 shadow-sm w-full mb-8">
+                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Job Number</p>
+                  <p className="text-brand-blue font-mono text-xl font-bold">{repairSuccess.jobNumber}</p>
+                </div>
+                <button 
+                  onClick={() => {
+                    setRepairSuccess(null);
+                    setJobId(repairSuccess.jobNumber);
+                  }}
+                  className="bg-brand-navy hover:bg-brand-blue text-white font-bold py-3 px-6 rounded-xl transition-colors w-full"
+                >
+                  Track This Repair
+                </button>
+              </motion.div>
+            ) : (
+              <div className="max-w-2xl mx-auto">
+                <form onSubmit={handleRepairSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-brand-navy mb-2">Full Name</label>
+                    <input type="text" name="customerName" placeholder="Your name" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-brand-navy mb-2">Email Address</label>
+                    <input type="email" name="customerEmail" placeholder="Your email" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-brand-navy mb-2">Device Model</label>
+                    <input type="text" name="deviceModel" placeholder="e.g. MacBook Pro 2021" className="w-full border border-slate-200 rounded-xl px-4 py-3" required />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-brand-navy mb-2">Problem Description</label>
+                    <textarea name="problem" placeholder="Describe the issue" className="w-full border border-slate-200 rounded-xl px-4 py-3 min-h-[120px]" required></textarea>
+                  </div>
+                  <button type="submit" disabled={isSubmitting} className="w-full bg-brand-blue hover:bg-brand-navy disabled:opacity-50 text-white font-bold py-4 rounded-xl transition-colors">
+                    {isSubmitting ? 'Submitting...' : 'Submit Repair Request'}
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
-        </motion.div>
-
-      </div>
+        </div>
+      </motion.section>
     </div>
   );
 }

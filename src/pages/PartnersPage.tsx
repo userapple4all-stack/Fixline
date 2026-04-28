@@ -39,12 +39,11 @@ export default function PartnersPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-slate-200 relative">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=60&w=1000" 
+                  src="/assets/images/partnership-at-fixline.svg" 
                   alt="Partnership collaboration" 
                   className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
                 />
               </div>
             </motion.div>

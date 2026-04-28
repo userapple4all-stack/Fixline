@@ -92,7 +92,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to="/products"
                     className="group flex items-center text-sm hover:text-white transition-colors w-fit"
                   >
                     <span>Products</span>
@@ -198,19 +198,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider & Large Logo */}
-        <div className="relative w-full mb-6 md:mb-8 flex items-center justify-center pointer-events-none">
-          <div 
-            className="absolute inset-x-0 flex justify-center items-center opacity-[0.06] select-none z-0" 
-            style={{ 
-              maskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)', 
-              WebkitMaskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)' 
-            }}
-          >
-            <img src={fixlineFoot} alt="" className="w-full h-auto pointer-events-none" />
-          </div>
-          <div className="h-px w-full bg-white/10 relative z-10 pointer-events-auto"></div>
-        </div>
+            {/* Divider & Large Logo */}
+            <div className="relative w-full mb-6 md:mb-8 flex items-center justify-center pointer-events-none">
+              <div 
+                className="absolute inset-x-0 flex justify-center items-center opacity-[0.06] select-none z-0" 
+                style={{ 
+                  maskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)', 
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 48%, transparent 75%)' 
+                }}
+              >
+                <button 
+                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })} 
+                  className="w-full relative z-10 pointer-events-auto"
+                >
+                  <img src={fixlineFoot} alt="Scroll to bottom" className="w-full h-auto" />
+                </button>
+              </div>
+              <div className="h-px w-full bg-white/10 relative z-10 pointer-events-auto"></div>
+            </div>
 
         {/* Legals */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs relative z-10">

@@ -10,7 +10,7 @@ import AboutPage from './pages/AboutPage';
 import PartnersPage from './pages/PartnersPage';
 import ContactPage from './pages/ContactPage';
 import RemoteSupportPage from './pages/RemoteSupportPage';
-import HardwareLabPage from './pages/HardwareLabPage';
+import ComputerRepairShopPage from './pages/ComputerRepairShopPage';
 import TechnicalConsultationPage from './pages/TechnicalConsultationPage';
 import SoftwareDeploymentsPage from './pages/SoftwareDeploymentsPage';
 import ProductPage from './pages/ProductPage';
@@ -39,9 +39,19 @@ export default function App() {
             <Route path="/training" element={<TrainingPage />} />
             <Route path="/products/:productId" element={<ProductPage />} />
             <Route path="/service/remote" element={<RemoteSupportPage />} />
-            <Route path="/service/hardware-lab" element={<HardwareLabPage />} />
+            <Route path="/service/hardware-lab" element={<ComputerRepairShopPage />} />
             <Route path="/service/consult" element={<TechnicalConsultationPage />} />
             <Route path="/service/install" element={<SoftwareDeploymentsPage />} />
+            
+            {/* SEO Landing Pages (Aliased to existing content) */}
+            <Route path="/laptop-repair-kenya" element={<ComputerRepairShopPage />} />
+            <Route path="/laptop-repair-nairobi" element={<ComputerRepairShopPage />} />
+            <Route path="/laptop-screen-repair" element={<ComputerRepairShopPage />} />
+            <Route path="/battery-replacement" element={<ComputerRepairShopPage />} />
+            <Route path="/diagnostics" element={<ComputerRepairShopPage />} />
+            <Route path="/it-support-kenya" element={<TechnicalConsultationPage />} />
+            <Route path="/computer-repair-nairobi" element={<ComputerRepairShopPage />} />
+            <Route path="/computer-repair-kenya" element={<ComputerRepairShopPage />} />
           </Routes>
         </main>
 

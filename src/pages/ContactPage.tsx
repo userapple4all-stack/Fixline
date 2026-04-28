@@ -15,6 +15,8 @@ import {
 export default function ContactPage() {
   const [clientType, setClientType] = useState<'individual' | 'business'>('individual');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [email, setEmail] = useState('');
@@ -68,13 +70,54 @@ export default function ContactPage() {
     if (phone) validatePhone(phone);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isPhoneValid = validatePhone(phone);
     const isEmailValid = validateEmail(email);
     if (!isPhoneValid || !isEmailValid) return;
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
+    try {
+      const formData = new FormData(e.currentTarget as HTMLFormElement);
+      const data = Object.fromEntries(formData.entries());
+      data.clientType = clientType; // Add state handled fields
+      
+      const payload = new URLSearchParams(data as any);
+      
+      // Obfuscate the webhook URL slightly in source code
+      const endpoint = [
+        'https://script.google.com/',
+        'macros/s/',
+        'AKfycbyHUDkBACPqyJDF7cHNuQqan_BNo1dO7WWhYSdrnN3Pm8EY1HaW5eCUtf12q43W6eUD',
+        '/exec'
+      ].join('');
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        mode: 'cors', // Changed from no-cors to handle actual response
+        body: payload
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.result === 'success') {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+        
+        // Clear specific form states
+        setPhone('');
+        setEmail('');
+      } else {
+        throw new Error(result.error || 'Failed to submit message');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setSubmitError('There was a problem submitting your message. Please try again or ensure your browser allows the connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -198,7 +241,12 @@ export default function ContactPage() {
                   <p className="text-sm text-slate-600 mb-4">
                     Need immediate assistance or want to discuss a project? Schedule a brief call with our technical team.
                   </p>
-                  <button className="bg-white border border-slate-200 hover:border-brand-blue text-brand-navy hover:text-brand-blue px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-fit">
+                  <button 
+                    data-cal-link="fixline-systems-mgiaor/15min"
+                    data-cal-namespace="15min"
+                    data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                    className="bg-white border border-slate-200 hover:border-brand-blue text-brand-navy hover:text-brand-blue px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 w-fit"
+                  >
                     <Phone weight="bold" size={16} />
                     Schedule Call
                   </button>
@@ -268,6 +316,7 @@ export default function ContactPage() {
                         <input 
                           type="text" 
                           id="name" 
+                          name="name"
                           required
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all bg-slate-50 focus:bg-white"
                           placeholder="John Doe"
@@ -278,6 +327,7 @@ export default function ContactPage() {
                         <input 
                           type="email" 
                           id="email" 
+                          name="email"
                           required
                           value={email}
                           onChange={handleEmailChange}
@@ -302,6 +352,7 @@ export default function ContactPage() {
                       <input 
                         type="tel" 
                         id="phone" 
+                        name="phone"
                         required
                         value={phone}
                         onChange={handlePhoneChange}
@@ -326,6 +377,7 @@ export default function ContactPage() {
                         <input 
                           type="text" 
                           id="company" 
+                          name="company"
                           required
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all bg-slate-50 focus:bg-white"
                           placeholder="Acme Corp"
@@ -338,6 +390,7 @@ export default function ContactPage() {
                       <input 
                         type="text" 
                         id="subject" 
+                        name="subject"
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all bg-slate-50 focus:bg-white"
                         placeholder="How can we help?"
@@ -348,6 +401,7 @@ export default function ContactPage() {
                       <label htmlFor="message" className="block text-sm font-bold text-slate-700">Message</label>
                       <textarea 
                         id="message" 
+                        name="message"
                         rows={5}
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all bg-slate-50 focus:bg-white resize-none"
@@ -357,12 +411,18 @@ export default function ContactPage() {
 
                     <motion.button 
                       type="submit"
+                      disabled={isSubmitting}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      className="w-full bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
                     >
-                      Send Message
-                      <ArrowRight weight="bold" size={20} />
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                      {!isSubmitting && <ArrowRight weight="bold" size={20} />}
                     </motion.button>
+                    {submitError && (
+                      <div className="p-4 bg-red-50 text-red-700 rounded-xl border border-red-100 text-sm">
+                        {submitError}
+                      </div>
+                    )}
                   </form>
                 )}
               </div>
