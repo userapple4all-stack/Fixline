@@ -49,11 +49,14 @@ export default function TechnicalConsultationPage() {
               </p>
               
               <div className="flex flex-row gap-3 sm:gap-4">
-                <Link to="/support" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
-                  <span className="sm:hidden">Book Now</span>
-                  <span className="hidden sm:inline">Book a Consultation</span>
+                <button 
+                  onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap"
+                >
+                  <span className="sm:hidden">See how we do it</span>
+                  <span className="hidden sm:inline">See how we do it</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </button>
                 <button 
                   data-cal-link="fixline-systems-mgiaor/support"
                   data-cal-namespace="support"
@@ -79,7 +82,7 @@ export default function TechnicalConsultationPage() {
                   alt="Technical Consultation Services" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
-                />
+                 loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -88,7 +91,7 @@ export default function TechnicalConsultationPage() {
 
       {/* Intro Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
@@ -122,7 +125,7 @@ export default function TechnicalConsultationPage() {
 
       {/* Capabilities Section */}
       <section className="py-10 lg:py-14 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200">
-        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-7 flex flex-col justify-center">
@@ -182,7 +185,7 @@ export default function TechnicalConsultationPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-10 lg:py-14 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl border border-brand-blue/30">
+      <section id="how-it-works" className="py-10 lg:py-14 bg-brand-blue relative overflow-hidden m-4 lg:m-6 rounded-xl border border-brand-blue/30">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[url('/assets/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=60&w=1000')] opacity-10 mix-blend-luminosity object-cover hidden lg:block"></div>

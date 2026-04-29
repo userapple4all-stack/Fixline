@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Buildings, Wrench, DesktopTower, Link as LinkIcon, SealCheck, ArrowsOutLineHorizontal } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
 import SectionLabel from '../components/SectionLabel';
 import StatCard from '../components/StatCard';
 import FeatureBox from '../components/FeatureBox';
@@ -42,10 +41,10 @@ export default function PartnersPage() {
             >
               <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 relative">
                 <img 
-                  src="/assets/images/partnership-at-fixline.svg" 
+                  src="/assets/partnership-at-fixline.svg" 
                   alt="Partnership collaboration" 
                   className="w-full h-full object-cover"
-                />
+                 loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -58,10 +57,10 @@ export default function PartnersPage() {
             className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 pt-10 mt-10"
           >
             {[
-                { val: '+200', label: <>Partner fleets <br/>under management</> },
-                { val: '+15', label: <>Authorized vendor <br/>alliances</> },
-                { val: '+12,000', label: <>Technical assets <br/>verified</> },
-                { val: '99.8%', label: <>Uptime maintained for <br/>partner networks</> },
+                { val: '75k', label: <>Partner fleets <br/>under management</> },
+                { val: '5', label: <>Authorized vendor <br/>alliances</> },
+                { val: '3000', label: <>Technical assets <br/>verified</> },
+                { val: '99.8', label: <>Uptime maintained for <br/>partner networks</> },
             ].map((stat, i) => (
                 <StatCard key={i} number={stat.val} label={stat.label} />
             ))}
@@ -140,7 +139,7 @@ export default function PartnersPage() {
             alt="Partnership Background" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
-          />
+           loading="lazy" />
         </div>
         
         {/* Subtle background glow for the whole box */}
@@ -210,10 +209,15 @@ export default function PartnersPage() {
           <h3 className="font-heading text-3xl md:text-4xl text-white font-bold tracking-tight text-center lg:text-left lg:max-w-2xl">
             Secure reliable technical support for your operations.
           </h3>
-          <Link to="/support" className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full lg:w-auto">
+          <button 
+            data-cal-link="fixline-systems-mgiaor/partnership"
+            data-cal-namespace="partnership"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            className="bg-white hover:bg-slate-50 text-brand-blue px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full lg:w-auto"
+          >
             <span className="text-sm tracking-wide whitespace-nowrap">Request a Partnership Consultation</span>
             <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
-          </Link>
+          </button>
         </div>
       </section>
     </div>

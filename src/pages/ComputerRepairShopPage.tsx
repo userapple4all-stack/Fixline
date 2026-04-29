@@ -81,7 +81,7 @@ export default function ComputerRepairShopPage() {
                   alt="Hardware Repair Workshop Services" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
-                />
+                 loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -90,7 +90,7 @@ export default function ComputerRepairShopPage() {
 
       {/* Intro Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
@@ -124,7 +124,7 @@ export default function ComputerRepairShopPage() {
 
       {/* What Our Hardware Workshop Can Help With */}
       <section className="py-10 lg:py-14 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200">
-        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left Column: Headers + Points */}
@@ -175,7 +175,7 @@ export default function ComputerRepairShopPage() {
                   Every repair in our repair workshop follows a rigorous quality-assurance process. If you suspect your hardware needs professional attention, book a repair evaluation to get an accurate assessment.
                 </p>
                 <div className="flex">
-                  <Link to="/contact" className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group">
+                  <Link to="/support" className="inline-flex text-brand-blue hover:text-brand-blue-hover text-lg sm:text-xl font-bold transition-all items-center gap-3 py-2 group">
                     <CalendarPlus size={28} weight="regular" className="group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
                     <span className="border-b-2 border-brand-blue/30 group-hover:border-brand-blue transition-colors pb-0.5">Book a Repair</span>
                   </Link>

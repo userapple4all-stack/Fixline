@@ -103,6 +103,19 @@ export default function HomePage() {
   const fullWelcomeText = "Welcome to Fixline";
   const navigate = useNavigate();
 
+  // Carousel logic for auto-scrolling services
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTab((currentTab) => {
+        const currentIndex = servicesData.findIndex((s) => s.id === currentTab);
+        const nextIndex = (currentIndex + 1) % servicesData.length;
+        return servicesData[nextIndex].id;
+      });
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   // Scroll to hash on load or hash change
   useEffect(() => {
     const hash = window.location.hash;
@@ -218,9 +231,7 @@ export default function HomePage() {
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
-                  data-cal-link="fixline-systems-mgiaor/support"
-                  data-cal-namespace="support"
-                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                   className="flex-1 sm:flex-none bg-white hover:bg-slate-50 border border-slate-200 text-brand-navy px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-sm hover:shadow flex items-center justify-center whitespace-nowrap"
                 >
                   Services
@@ -242,7 +253,7 @@ export default function HomePage() {
                   className="w-full h-[550px] object-cover"
                   referrerPolicy="no-referrer"
                   fetchPriority="high"
-                />
+                 loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/5 to-transparent mix-blend-overlay"></div>
               </div>
               
@@ -289,7 +300,7 @@ export default function HomePage() {
                     alt={`${logo.name} logo`} 
                     className={`${logo.className} grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300`}
                     referrerPolicy="no-referrer"
-                  />
+                   loading="lazy" />
                 </div>
               ))}
               {/* Second set of logos for seamless loop */}
@@ -300,7 +311,7 @@ export default function HomePage() {
                     alt={`${logo.name} logo`} 
                     className={`${logo.className} grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300`}
                     referrerPolicy="no-referrer"
-                  />
+                   loading="lazy" />
                 </div>
               ))}
             </div>
@@ -404,7 +415,7 @@ export default function HomePage() {
                       alt={service.title} 
                       className="w-full h-[250px] sm:h-[350px] lg:h-[450px] object-cover rounded-xl border border-slate-100"
                       referrerPolicy="no-referrer"
-                    />
+                     loading="lazy" />
                   </div>
                 </motion.div>
               );
@@ -453,7 +464,7 @@ export default function HomePage() {
                   alt="Engineer working on hardware" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
-                />
+                 loading="lazy" />
                 <div className="absolute inset-0 bg-brand-blue/5 mix-blend-overlay"></div>
               </div>
             </div>
@@ -548,7 +559,7 @@ export default function HomePage() {
                           transition={{ duration: 0.5, ease: "easeOut" }}
                           className="bg-white border-2 rounded-3xl p-6 lg:p-8 flex-1 flex flex-col justify-center min-h-[260px] lg:min-h-[320px] relative overflow-hidden group/card"
                         >
-                          <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.03] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none" />
+                          <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.03] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none"  loading="lazy" />
                           <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-bold mb-4 flex-shrink-0 lg:hidden text-lg relative z-10 transition-colors duration-500 group-hover/card:bg-brand-blue group-hover/card:text-white group-hover/card:border-brand-blue">
                             {step.num}
                           </div>
@@ -601,7 +612,7 @@ export default function HomePage() {
                         transition={{ duration: 0.5, ease: "easeOut" }}
                         className="bg-brand-blue border-2 border-brand-blue rounded-3xl p-6 lg:p-10 flex-1 flex flex-col justify-center items-center text-center min-h-[260px] lg:min-h-[320px] relative overflow-hidden group/card"
                       >
-                        <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.05] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none" />
+                        <img src={fixlineMotif} alt="" className="absolute top-0 right-0 w-24 h-24 opacity-[0.05] -mr-8 -mt-8 transition-transform duration-500 group-hover/card:scale-110 lg:hidden pointer-events-none"  loading="lazy" />
                         <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold mb-4 flex-shrink-0 lg:hidden text-lg relative z-10 transition-colors duration-500 group-hover/card:bg-white group-hover/card:text-brand-blue group-hover/card:border-white">
                           <ArrowRight size={20} weight="bold" />
                         </div>
@@ -651,7 +662,7 @@ export default function HomePage() {
             alt="Abstract tech background" 
             className="w-full h-full object-cover opacity-[0.08] mix-blend-overlay"
             referrerPolicy="no-referrer"
-          />
+           loading="lazy" />
         </div>
         
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
@@ -793,7 +804,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none"  loading="lazy" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <Network size={28} weight="duotone" />
               </div>
@@ -809,7 +820,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none"  loading="lazy" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <DesktopTower size={28} weight="duotone" />
               </div>
@@ -825,7 +836,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none"  loading="lazy" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <TerminalWindow size={28} weight="duotone" />
               </div>
@@ -841,7 +852,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="cursor-pointer group shrink-0 w-[85vw] sm:w-[340px] lg:w-[400px] snap-center bg-slate-50 border border-slate-200/60 rounded-3xl p-8 hover:bg-white hover:border-brand-blue/30 hover:shadow-[0_20px_40px_-15px_rgba(0,82,255,0.1)] transition-all duration-500 relative overflow-hidden"
             >
-              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none" />
+              <img src={fixlineMotif} alt="" className="absolute -top-12 -right-12 w-40 h-40 opacity-[0.03] transition-transform duration-500 group-hover:scale-110 pointer-events-none"  loading="lazy" />
               <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-blue mb-6 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue transition-colors duration-500 relative z-10">
                 <Wrench size={28} weight="duotone" />
               </div>
@@ -881,7 +892,7 @@ export default function HomePage() {
                 onClick={() => navigate('/support')}
                 className="bg-white hover:bg-slate-50 text-brand-blue px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
               >
-                <span className="text-base tracking-wide whitespace-nowrap">Start Free Diagnostics</span>
+                <span className="text-base tracking-wide whitespace-nowrap">Let's have a chat</span>
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -930,7 +941,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-semibold text-sm">Kevin Mutua</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Kevin+Mutua&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Kevin+Mutua&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -942,7 +953,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm text-brand-navy">Emily Watson</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Emily+Watson&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Emily+Watson&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -957,7 +968,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm text-brand-navy">Priya Sharma</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -969,7 +980,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm text-brand-navy">Lukas Müller</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Lukas+Muller&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Lukas+Muller&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -981,7 +992,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm text-brand-navy">Samuel Wekesa</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Samuel+Wekesa&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Samuel+Wekesa&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -996,7 +1007,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm text-brand-navy">David Kimani</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=David+Kimani&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=David+Kimani&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -1010,7 +1021,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between items-center gap-3">
                   <p className="font-bold text-sm">Thabo Mokoena</p>
                   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100 flex items-center justify-center">
-                    <img src="https://ui-avatars.com/api/?name=Thabo+Mokoena&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover" />
+                    <img src="https://ui-avatars.com/api/?name=Thabo+Mokoena&background=f1f5f9&color=0f172a" alt="Avatar" className="w-full h-full object-cover"  loading="lazy" />
                   </div>
                 </div>
               </div>

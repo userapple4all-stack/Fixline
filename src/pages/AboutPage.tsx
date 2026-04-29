@@ -29,7 +29,7 @@ export default function AboutPage() {
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % gapSlides.length);
-    }, 5000); // 5 seconds per slide
+    }, 10000); // 10 seconds per slide
     return () => clearInterval(timer);
   }, []);
 
@@ -72,7 +72,7 @@ export default function AboutPage() {
                   alt="IT Professionals working" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
-                />
+                 loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -85,19 +85,19 @@ export default function AboutPage() {
             className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 pt-10 mt-10"
           >
             <StatCard 
-              number="+5k" 
+              number="3k" 
               label={<>Hardware assets<br/>engineered & restored</>} 
             />
             <StatCard 
-              number="+8k" 
+              number="5k" 
               label={<>Secure remote<br/>sessions resolved</>} 
             />
             <StatCard 
-              number="+200" 
+              number="75+" 
               label={<>Managed networks &<br/>fleet infrastructures</>} 
             />
             <StatCard 
-              number="+50k" 
+              number="30k+" 
               label={<>Hours of downtime<br/>eliminated for clients</>} 
             />
           </motion.div>
@@ -106,7 +106,7 @@ export default function AboutPage() {
 
       {/* The Gap (Auto Scroll) Section */}
       <section className="pt-20 pb-12 lg:pt-28 lg:pb-16 relative bg-white border-t border-slate-200 overflow-hidden">
-        <img src={fixlineMotif} alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0" />
+        <img src={fixlineMotif} alt="" className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-56 h-56 lg:w-72 lg:h-72 opacity-[0.03] pointer-events-none z-0"  loading="lazy" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -243,7 +243,7 @@ export default function AboutPage() {
                 alt="Fixline Team" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
-              />
+               loading="lazy" />
             </div>
 
             {/* 3-Column Image Stats Footer */}
@@ -289,7 +289,7 @@ export default function AboutPage() {
             alt="Technology background" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
-          />
+           loading="lazy" />
         </div>
         
         {/* Subtle background glow for the whole box */}
@@ -378,10 +378,15 @@ export default function AboutPage() {
             </div>
             
             <div className="lg:w-1/3 flex justify-center lg:justify-end">
-              <Link to="/support" className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto">
+              <button 
+                data-cal-link="fixline-systems-mgiaor/partnership"
+                data-cal-namespace="partnership"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group w-full sm:w-auto"
+              >
                 <span className="text-base tracking-wide whitespace-nowrap">Consult an engineer</span>
                 <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
-              </Link>
+              </button>
             </div>
           </motion.div>
         </div>

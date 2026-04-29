@@ -33,7 +33,7 @@ export default function Footer() {
                 src={fixlineLogo2}
                 alt="Fixline"
                 className="h-6 md:h-8 w-auto"
-              />
+               loading="lazy" />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 max-w-sm sm:max-w-md md:max-w-lg md:pr-8 mb-8">
               Fixline provides enterprise-grade IT diagnostics, hardware repair,
@@ -219,7 +219,7 @@ export default function Footer() {
                   onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })} 
                   className="w-full relative z-10 pointer-events-auto"
                 >
-                  <img src={fixlineFoot} alt="Scroll to bottom" className="w-full h-auto" />
+                  <img src={fixlineFoot} alt="Scroll to bottom" className="w-full h-auto"  loading="lazy" />
                 </button>
               </div>
               <div className="h-px w-full bg-white/10 relative z-10 pointer-events-auto"></div>

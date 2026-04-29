@@ -27,7 +27,7 @@ const productData: Record<string, any> = {
   },
   tools: {
     title: "Fixline Tools",
-    description: "A catalog of verified, high-grade hardware components and tools used in our repairs and custom builds.",
+    description: "A catalog of verified, high-grade hardware components and tooling used in our repairs and custom builds.",
     Icon: Wrench,
     accent: "amber-500",
     launchType: "catalog"
@@ -90,7 +90,7 @@ export default function ProductPage() {
           
           <div className="relative backdrop-blur-2xl bg-white/40 border border-white/60 shadow-[0_8px_32px_0_rgba(0,68,255,0.05)] rounded-3xl p-10 md:p-16 lg:p-24 text-center overflow-hidden m-4 md:m-8">
             {/* Subtle motif watermark */}
-            <img src={fixlineMotif} alt="" className="absolute -top-10 -right-10 w-96 h-96 opacity-[0.03] pointer-events-none" />
+            <img src={fixlineMotif} alt="" className="absolute -top-10 -right-10 w-96 h-96 opacity-[0.03] pointer-events-none"  loading="lazy" />
             
             {/* Ambient light inside the glass box */}
             <div className="absolute top-0 right-1/4 w-64 h-64 bg-brand-blue/10 blur-[80px] rounded-full pointer-events-none"></div>

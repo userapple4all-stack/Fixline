@@ -285,7 +285,7 @@ export default function Navbar() {
             
             
             <Link to="/support" className="group flex items-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm shadow-brand-blue/20">
-              Start Repair
+              Get Support
               <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
                 <ArrowRight size={16} weight="bold" />
               </span>
@@ -403,7 +403,7 @@ export default function Navbar() {
               onClick={() => handleMobileMenuClick('/support')}
               className="group flex items-center justify-center bg-brand-blue hover:bg-brand-blue-hover text-white px-5 py-3 rounded-full text-sm font-bold w-full mt-6 shadow-sm shadow-brand-blue/20 transition-all"
             >
-              Start Repair
+              Get Support
               <span className="max-w-0 opacity-0 group-hover:max-w-[20px] group-hover:opacity-100 group-hover:ml-1.5 transition-all duration-300 ease-out flex items-center overflow-hidden">
                 <ArrowRight size={16} weight="bold" />
               </span>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Link } from 'react-router-dom';
 import fixlineMotif from '/assets/fixline-motif.svg';
 import { 
   ArrowRight, 
@@ -47,11 +46,14 @@ export default function SoftwareDeploymentsPage() {
               </p>
               
               <div className="flex flex-row gap-3 sm:gap-4">
-                <Link to="/contact" className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap">
-                  <span className="sm:hidden">Plan Now</span>
-                  <span className="hidden sm:inline">Plan a Rollout</span>
+                <button 
+                  onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blue-hover text-white px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all shadow-[0_8px_20px_rgba(0,82,255,0.25)] hover:shadow-[0_12px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 flex items-center justify-center gap-2 group whitespace-nowrap"
+                >
+                  <span className="sm:hidden">See why</span>
+                  <span className="hidden sm:inline">See why</span>
                   <ArrowRight size={18} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </button>
                 <button 
                   data-cal-link="fixline-systems-mgiaor/support"
                   data-cal-namespace="support"
@@ -77,7 +79,7 @@ export default function SoftwareDeploymentsPage() {
                   alt="Software Deployment Services" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
-                />
+                 loading="lazy" />
               </div>
             </motion.div>
           </div>
@@ -86,7 +88,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Intro Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -top-24 -right-24 sm:-top-32 sm:-right-24 w-80 h-80 sm:w-96 sm:h-96 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
@@ -120,7 +122,7 @@ export default function SoftwareDeploymentsPage() {
 
       {/* Capabilities Section */}
       <section className="py-10 lg:py-14 bg-white relative overflow-hidden m-4 lg:m-6 rounded-xl border border-slate-200">
-        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none" />
+        <img src={fixlineMotif} alt="" className="absolute -bottom-10 -left-10 w-64 h-64 opacity-[0.03] pointer-events-none"  loading="lazy" />
         <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-7 flex flex-col justify-center">
@@ -283,7 +285,7 @@ export default function SoftwareDeploymentsPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 lg:py-24 bg-slate-50 border-t border-slate-200">
+      <section id="benefits" className="py-16 lg:py-24 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           
           <div className="mb-12 lg:mb-16">
